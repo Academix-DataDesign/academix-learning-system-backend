@@ -4,20 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserSocialsTable extends Migration
+class CreateNewsletterTable extends Migration
 {
     public function up()
     {
-        Schema::create('user_socials', function (Blueprint $table) {
+        Schema::create('newsletter', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
-            $table->string('social_id');
+            $table->foreignId('student_id')->constrained('users');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('user_socials');
+        Schema::dropIfExists('news2023_06_14_123743_create_reports_tableletter');
     }
 }

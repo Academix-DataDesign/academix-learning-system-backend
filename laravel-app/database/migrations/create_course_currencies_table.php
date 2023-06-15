@@ -12,7 +12,6 @@ class CreateCourseCurrenciesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('currency_id');
-            $table->timestamps();
 
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');

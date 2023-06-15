@@ -4,19 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseLevelsTable extends Migration
+class CreateUserSocialsTable extends Migration
 {
     public function up()
     {
-        Schema::create('course_levels', function (Blueprint $table) {
+        Schema::create('user_socials', function (Blueprint $table) {
             $table->id();
-            $table->string('level_name');
-            $table->timestamps();
+            $table->string('user_id');
+            $table->string('social_id');
+          
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('course_levels');
+        Schema::dropIfExists('user_socials');
     }
 }

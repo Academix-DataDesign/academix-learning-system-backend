@@ -14,7 +14,7 @@ class CreateReleasesTable extends Migration
             $table->string('release_title');
             $table->dateTime('date');
             $table->string('link');
-            $table->timestamps();
+           
         });
     }
 

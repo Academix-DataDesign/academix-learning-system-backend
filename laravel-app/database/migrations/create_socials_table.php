@@ -12,7 +12,7 @@ class CreateSocialsTable extends Migration
             $table->id();
             $table->string('social_icon');
             $table->string('social_name');
-            $table->timestamps();
+            
         });
     }
 

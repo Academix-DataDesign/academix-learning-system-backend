@@ -21,14 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('town');
             $table->string('country');
             $table->string('short_bio')->default('Lorem ipsum');
-            $table->string('portfolio_url')->nullable();
-            $table->string('instagram_url')->nullable();
-            $table->string('linkedin_url')->nullable();
-            $table->string('github_url')->nullable();
-            $table->string('twitter_url')->nullable();
+            $table->foreign('user_socials')->references('id')->on('types');
+            $table->foreign('type_id')->references('id')->on('usersocial');
             $table->timestamps();
-
-            $table->foreign('type_id')->references('id')->on('types');
         });
     }
 
