@@ -21,8 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('town');
             $table->string('country');
             $table->string('short_bio')->default('Lorem ipsum');
-            $table->foreign('user_socials')->references('id')->on('types');
-            $table->foreign('type_id')->references('id')->on('usersocial');
+
+            $table->foreign('type_id')->references('id')->on('types');
+
             $table->timestamps();
         });
     }
