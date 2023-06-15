@@ -12,7 +12,7 @@ class CreateReportsTable extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained('courses');
             $table->foreignId('student_id')->constrained('users');
-            $table->string('report_title');
+            $table->string('report_title', 255);
             $table->text('report_body');
             $table->timestamps();
         });

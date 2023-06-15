@@ -10,10 +10,8 @@ class CreateBookmarksTable extends Migration
     {
         Schema::create('bookmarks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('student_id');
-            $table->foreign('student_id')->references('id')->on('users');
-            $table->unsignedBigInteger('instructor_id');
-            $table->foreign('instructor_id')->references('id')->on('users');
+            $table->foreignId('student_id')->constrained('users');
+            $table->foreignId('instructor_id')->constrained('users');
             $table->timestamps();
         });
     }

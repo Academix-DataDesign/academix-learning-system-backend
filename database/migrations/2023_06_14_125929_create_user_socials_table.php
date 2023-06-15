@@ -10,12 +10,9 @@ class CreateUserSocialsTable extends Migration
     {
         Schema::create('user_socials', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('social_id');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('social_id')->constrained('socials');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('social_id')->references('id')->on('socials')->onDelete('cascade');
         });
     }
 

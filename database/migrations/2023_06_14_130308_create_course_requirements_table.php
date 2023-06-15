@@ -10,8 +10,7 @@ class CreateCourseRequirementsTable extends Migration
     {
         Schema::create('course_requirements', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('course_id');
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreignId('course_id')->constrained('courses');
             $table->string('requirement_text', 255);
             $table->timestamps();
         });

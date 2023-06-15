@@ -10,7 +10,7 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('comment_name');
+            $table->string('comment_name', 255);
             $table->timestamps();
         });
     }

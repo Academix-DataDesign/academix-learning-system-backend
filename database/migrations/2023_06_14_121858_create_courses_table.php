@@ -15,9 +15,9 @@ class CreateCoursesTable extends Migration
             $table->foreignId('language_id')->constrained('languages');
             $table->foreignId('instructor_id')->constrained('users');
             $table->foreignId('level_id')->constrained('course_levels');
-            $table->string('title');
+            $table->string('title', 255);
             $table->text('description');
-            $table->string('thumbnail_path')->default('thumbnail.png');
+            $table->string('thumbnail_path', 255)->default('thumbnail.png');
             $table->float('duration');
             $table->integer('wishes')->default(0);
             $table->float('price')->nullable();

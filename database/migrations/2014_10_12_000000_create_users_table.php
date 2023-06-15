@@ -10,20 +10,17 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('type_id')->default(3);
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('avatar')->default('avatar.png');
-            $table->string('license')->nullable();
+            $table->string('first_name', 255);
+            $table->string('last_name', 255);
+            $table->string('email', 255)->unique();
+            $table->string('password', 255);
+            $table->string('avatar', 255)->default('avatar.png');
+            $table->string('license', 255)->nullable();
             $table->text('bio')->nullable();
-            $table->string('town');
-            $table->string('country');
-            $table->string('short_bio')->default('Lorem ipsum');
-
-            $table->foreign('type_id')->references('id')->on('types');
-
+            $table->string('town', 255);
+            $table->string('country', 255);
+            $table->string('short_bio', 255)->default('Lorem ipsum');
+            $table->foreignId('type_id')->default(3)->constrained('types');
             $table->timestamps();
         });
     }

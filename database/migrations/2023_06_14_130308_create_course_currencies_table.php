@@ -10,11 +10,8 @@ class CreateCourseCurrenciesTable extends Migration
     {
         Schema::create('course_currencies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('currency_id');
-
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
+            $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('currency_id')->constrained('currencies');
         });
     }
 

@@ -10,7 +10,7 @@ class CreateTopicsTable extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
-            $table->string('topic_name');
+            $table->string('topic_name', 255);
         });
     }
 

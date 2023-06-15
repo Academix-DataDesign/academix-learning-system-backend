@@ -11,10 +11,9 @@ class CreateReleasesTable extends Migration
         Schema::create('releases', function (Blueprint $table) {
             $table->id();
             $table->foreignId('instructor_id')->constrained('users');
-            $table->string('release_title');
+            $table->string('release_title', 255);
+            $table->string('link', 255);
             $table->dateTime('date');
-            $table->string('link');
-           
         });
     }
 

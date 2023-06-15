@@ -10,9 +10,8 @@ class CreateSocialsTable extends Migration
     {
         Schema::create('socials', function (Blueprint $table) {
             $table->id();
-            $table->string('social_icon');
-            $table->string('social_name');
-
+            $table->string('social_icon', 255);
+            $table->string('social_name', 255);
             $table->timestamps();
         });
     }

@@ -10,10 +10,8 @@ class CreateInstructorCoursesTable extends Migration
     {
         Schema::create('instructor_courses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('instructor_id');
-            $table->foreign('instructor_id')->references('id')->on('users');
-            $table->unsignedBigInteger('course_id');
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreignId('instructor_id')->constrained('users');
+            $table->foreignId('course_id')->constrained('courses');
             $table->timestamps();
         });
     }
