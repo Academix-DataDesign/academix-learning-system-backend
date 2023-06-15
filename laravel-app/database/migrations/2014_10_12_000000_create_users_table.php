@@ -1,38 +1,39 @@
 <?php
 
-namespace App\Models;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class User extends Authenticatable
+class CreateUsersTable extends Migration
 {
-    protected $fillable = [
-        'type_id',
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-        'avatar',
-        'license',
-        'bio',
-        'town',
-        'country',
-        'short_bio',
-        'portfolio_url',
-        'instagram_url',
-        'linkedin_url',
-        'github_url',
-        'twitter_url',
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    public function type()
+    public function up()
     {
-        return $this->belongsTo(Type::class);
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('type_id')->default(3);
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('avatar')->default('avatar.png');
+            $table->string('license')->nullable();
+            $table->text('bio')->nullable();
+            $table->string('town');
+            $table->string('country');
+            $table->string('short_bio')->default('Lorem ipsum');
+            $table->string('portfolio_url')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('linkedin_url')->nullable();
+            $table->string('github_url')->nullable();
+            $table->string('twitter_url')->nullable();
+            $table->timestamps();
+
+            $table->foreign('type_id')->references('id')->on('types');
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('users');
     }
 }
