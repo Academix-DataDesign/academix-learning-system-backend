@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
@@ -27,6 +29,16 @@ class CreateUsersTable extends Migration
             // Timestamps
             $table->timestamps();
         });
+
+        DB::table('users')->insert([
+            'type_id' => 3,
+            'first_name' => 'Neko',
+            'last_name' => 'Tamo',
+            'email' => 'nekotamo.doe@example.com',
+            'password' => Hash::make("proba123"),
+            'town' => 'Podgorica',
+            'country' => 'Crna Gora',
+        ]);
     }
 
     public function down()
