@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CourseCurrency extends Model
 {
-    protected $table = 'course_currencies';
-
     protected $fillable = ['course_id', 'currency_id'];
 
     public function course()

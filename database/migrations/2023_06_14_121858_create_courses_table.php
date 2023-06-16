@@ -19,7 +19,7 @@ class CreateCoursesTable extends Migration
             $table->string('title', 255);
             $table->text('description');
             $table->string('thumbnail_path', 255)->default('thumbnail.png');
-            $table->float('duration');
+            $table->integer('duration');
             $table->integer('wishes')->default(0);
             $table->float('price')->nullable();
             $table->boolean('certification')->default(false);

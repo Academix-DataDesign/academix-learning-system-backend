@@ -12,7 +12,7 @@ class CreateReleasesTable extends Migration
             $table->id();
             // Constraints
             $table->foreignId('instructor_id')->constrained('users');
-            $table->string('release_title', 255);
+            $table->string('title', 255);
             $table->string('link', 255);
             // Indexes
             $table->index('instructor_id');

@@ -12,9 +12,12 @@ class CreateLessonsTable extends Migration
             $table->id();
             $table->string('title', 255);
             $table->string('path', 255);
-            $table->integer('lesson_id');
+            $table->text('content')->nullable();
+            // Constraints
+            $table->foreignId('section_id')->constrained('sections');
+            $table->foreignId('video_id')->constrained('videos');
             // Indexes
-            $table->index('lesson_id');
+            $table->index('section_id');
             // Timestamps
             $table->timestamps();
         });

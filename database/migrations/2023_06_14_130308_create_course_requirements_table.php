@@ -12,7 +12,7 @@ class CreateCourseRequirementsTable extends Migration
             $table->id();
             // Constraints
             $table->foreignId('course_id')->constrained('courses');
-            $table->string('requirement_text', 255);
+            $table->string('text', 255);
             // Timestamps
             $table->timestamps();
         });

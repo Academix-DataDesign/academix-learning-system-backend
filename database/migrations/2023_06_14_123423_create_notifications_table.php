@@ -12,8 +12,8 @@ class CreateNotificationsTable extends Migration
             $table->id();
             // Constraints
             $table->foreignId('course_id')->constrained('courses');
-            $table->string('notification_title', 255);
-            $table->text('notification_body');
+            $table->string('title', 255);
+            $table->text('body');
             // Indexes
             $table->index('course_id');
             // Timestamps

@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,4 +11,3 @@ class CourseLevel extends Model
 
     protected $fillable = ['level_name'];
 }
-

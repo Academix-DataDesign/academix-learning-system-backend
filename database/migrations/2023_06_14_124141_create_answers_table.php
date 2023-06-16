@@ -12,11 +12,11 @@ class CreateAnswersTable extends Migration
             $table->id();
             // Constraints
             $table->foreignId('report_id')->constrained('reports');
-            $table->foreignId('instructor_id')->constrained('users');
-            $table->text('answer_body');
+            $table->foreignId('user_id')->constrained('users');
+            $table->text('body');
             // Indexes
             $table->index('report_id');
-            $table->index('instructor_id');
+            $table->index('user_id');
             // Timestamps
             $table->timestamps();
         });
