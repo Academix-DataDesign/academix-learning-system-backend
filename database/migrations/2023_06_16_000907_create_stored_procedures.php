@@ -14,27 +14,32 @@ class CreateStoredProcedures extends Migration
      */
     public function up()
     {
-        $queries = [
-            // Create stored procedure to get user by ID
-            "
-            CREATE PROCEDURE GetUserByID (IN userID INT)
-            BEGIN
-                SELECT * FROM users WHERE id = userID;
-            END
-            ",
+        // Check if the stored procedures exist before creating them
+        $procedureExists = DB::select("SHOW PROCEDURE STATUS WHERE Db = DATABASE() AND Name IN ('GetUserByID', 'EnrollStudent')");
 
-            // Create stored procedure to enroll a student in a course
-            "
-            CREATE PROCEDURE EnrollStudent (IN studentID INT, IN courseID INT)
-            BEGIN
-                INSERT INTO enrollments (student_id, course_id, enrolled_at, created_at, updated_at)
-                VALUES (studentID, courseID, NOW(), NOW(), NOW());
-            END
+        $existingProcedures = collect($procedureExists)->pluck('Name')->all();
+
+        $proceduresToCreate = [
+            'GetUserByID' => "
+                CREATE PROCEDURE GetUserByID (IN userID INT)
+                BEGIN
+                    SELECT * FROM users WHERE id = userID;
+                END
+            ",
+            'EnrollStudent' => "
+                CREATE PROCEDURE EnrollStudent (IN studentID INT, IN courseID INT)
+                BEGIN
+                    INSERT INTO enrollments (student_id, course_id, enrolled_at, created_at, updated_at)
+                    VALUES (studentID, courseID, NOW(), NOW(), NOW());
+                END
             "
         ];
 
-        foreach ($queries as $query) {
-            DB::statement($query);
+        foreach ($proceduresToCreate as $procedureName => $procedureCode) {
+            if (!in_array($procedureName, $existingProcedures)) {
+                // Create the stored procedure
+                DB::statement($procedureCode);
+            }
         }
     }
 
