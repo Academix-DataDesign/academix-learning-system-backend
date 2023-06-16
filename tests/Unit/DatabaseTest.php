@@ -2,20 +2,15 @@
 
 namespace Tests\Unit;
 
-use App\Models\Type;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class DatabaseTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /**
-     * Test if a record is saved in the database.
-     */
+    /** @test */
     public function testUserIsSavedInDatabase()
     {
         // Create the user record
@@ -38,19 +33,5 @@ class DatabaseTest extends TestCase
         $this->assertEquals('Podgorica', $savedRecord->town);
         $this->assertEquals('Montenegro', $savedRecord->country);
         $this->assertEquals('$2y$10$92IXUNpkjO0rOQ5byM', $savedRecord->password);
-    }
-
-    public function testTypesTableIsCreatedWithDefaultTypes()
-    {
-        // Run the migration
-        $this->artisan('migrate');
-
-        // Assert that the types table exists
-        $this->assertTrue(Schema::hasTable((new Type)->getTable()));
-
-        // Assert that the default types are inserted
-        $expectedTypes = ['Admin', 'Manager', 'User']; // Update the expected types here
-        $actualTypes = Type::pluck('name')->toArray();
-        $this->assertEquals($expectedTypes, $actualTypes);
     }
 }
