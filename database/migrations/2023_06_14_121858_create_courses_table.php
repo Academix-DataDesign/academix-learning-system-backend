@@ -10,6 +10,7 @@ class CreateCoursesTable extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            // Constraints
             $table->foreignId('category_id')->constrained('categories');
             $table->foreignId('status_id')->constrained('statuses');
             $table->foreignId('language_id')->constrained('languages');
@@ -23,6 +24,13 @@ class CreateCoursesTable extends Migration
             $table->float('price')->nullable();
             $table->boolean('certification')->default(false);
             $table->boolean('bestseller')->default(false);
+            // Indexes
+            $table->index('category_id');
+            $table->index('status_id');
+            $table->index('language_id');
+            $table->index('instructor_id');
+            $table->index('level_id');
+            // Timestamps
             $table->timestamps();
         });
     }

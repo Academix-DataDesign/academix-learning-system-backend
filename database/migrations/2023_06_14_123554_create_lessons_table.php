@@ -13,6 +13,9 @@ class CreateLessonsTable extends Migration
             $table->string('title', 255);
             $table->string('path', 255);
             $table->integer('lesson_id');
+            // Indexes
+            $table->index('lesson_id');
+            // Timestamps
             $table->timestamps();
         });
     }

@@ -10,8 +10,13 @@ class CreateWishesTable extends Migration
     {
         Schema::create('wishes', function (Blueprint $table) {
             $table->id();
+            // Constraints
             $table->foreignId('student_id')->constrained('users');
             $table->foreignId('course_id')->constrained('courses');
+            // Indexes
+            $table->index('student_id');
+            $table->index('course_id');
+            // Timestamps
             $table->timestamps();
         });
     }

@@ -10,9 +10,14 @@ class CreateEnrollmentsTable extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
+            // Constraints
             $table->foreignId('student_id')->constrained('users');
             $table->foreignId('course_id')->constrained('courses');
             $table->timestamp('enrolled_at')->default(now());
+            // Indexes
+            $table->index('student_id');
+            $table->index('course_id');
+            // Timestamps
             $table->timestamps();
         });
     }

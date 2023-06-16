@@ -10,8 +10,10 @@ class CreateInstructorCoursesTable extends Migration
     {
         Schema::create('instructor_courses', function (Blueprint $table) {
             $table->id();
+            // Constraints
             $table->foreignId('instructor_id')->constrained('users');
             $table->foreignId('course_id')->constrained('courses');
+            // Timestamps
             $table->timestamps();
         });
     }

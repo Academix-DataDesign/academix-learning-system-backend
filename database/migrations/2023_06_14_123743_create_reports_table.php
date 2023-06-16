@@ -10,10 +10,15 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
+            // Constraints
             $table->foreignId('course_id')->constrained('courses');
             $table->foreignId('student_id')->constrained('users');
             $table->string('report_title', 255);
             $table->text('report_body');
+            // Indexes
+            $table->index('course_id');
+            $table->index('student_id');
+            // Timestamps
             $table->timestamps();
         });
     }

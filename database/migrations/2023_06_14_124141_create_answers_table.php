@@ -10,9 +10,14 @@ class CreateAnswersTable extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
+            // Constraints
             $table->foreignId('report_id')->constrained('reports');
             $table->foreignId('instructor_id')->constrained('users');
             $table->text('answer_body');
+            // Indexes
+            $table->index('report_id');
+            $table->index('instructor_id');
+            // Timestamps
             $table->timestamps();
         });
     }

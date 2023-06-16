@@ -10,7 +10,11 @@ class CreateNewsletterTable extends Migration
     {
         Schema::create('newsletter', function (Blueprint $table) {
             $table->id();
+            // Constraints
             $table->foreignId('student_id')->constrained('users');
+            // Indexes
+            $table->index('student_id');
+            // Timestamps
             $table->timestamps();
         });
     }

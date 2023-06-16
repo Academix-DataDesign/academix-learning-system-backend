@@ -18,6 +18,10 @@ return new class extends Migration
             $table->text('queue');
             $table->longText('payload');
             $table->longText('exception');
+            // Indexes
+            $table->index('uuid');
+            $table->index('failed_at');
+            // Timestamps
             $table->timestamp('failed_at')->useCurrent();
         });
     }

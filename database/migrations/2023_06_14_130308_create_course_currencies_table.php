@@ -10,6 +10,7 @@ class CreateCourseCurrenciesTable extends Migration
     {
         Schema::create('course_currencies', function (Blueprint $table) {
             $table->id();
+            // Constraints
             $table->foreignId('course_id')->constrained('courses');
             $table->foreignId('currency_id')->constrained('currencies');
         });

@@ -10,6 +10,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            // Constraints
+            $table->foreignId('type_id')->default(3)->constrained('types');
             $table->string('first_name', 255);
             $table->string('last_name', 255);
             $table->string('email', 255)->unique();
@@ -20,7 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('town', 255);
             $table->string('country', 255);
             $table->string('short_bio', 255)->default('Lorem ipsum');
-            $table->foreignId('type_id')->default(3)->constrained('types');
+            // Indexes
+            $table->index('email');
+            // Timestamps
             $table->timestamps();
         });
     }

@@ -10,8 +10,10 @@ class CreateCourseRequirementsTable extends Migration
     {
         Schema::create('course_requirements', function (Blueprint $table) {
             $table->id();
+            // Constraints
             $table->foreignId('course_id')->constrained('courses');
             $table->string('requirement_text', 255);
+            // Timestamps
             $table->timestamps();
         });
     }
