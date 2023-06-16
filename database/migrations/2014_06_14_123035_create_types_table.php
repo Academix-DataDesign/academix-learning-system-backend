@@ -18,8 +18,8 @@ class CreateTypesTable extends Migration
         // Insert default user types
         $types = [
             ['name' => 'Admin'],
-            ['name' => 'Manager'],
-            ['name' => 'User'],
+            ['name' => 'Instructor'],
+            ['name' => 'Learner'],
         ];
 
         DB::table('types')->insert($types);
