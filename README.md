@@ -23,4 +23,11 @@ We welcome contributions to Academix Learning System! To contribute, please foll
 - Submit a pull request to the main branch of the main repository.
 
 # License
-Academix Learning System is licensed under the MIT License.
+Academix Learning System is licensed under the [MIT License](LICENSE).
+
+# Security
+For security-related issues, please refer to our [security.md](./SECURITY.md) file.
+
+# Issue Templates
+- [Bug Report](./.github/ISSUE_TEMPLATE/bug_report.md)
+- [Feature Request](./.github/ISSUE_TEMPLATE/feature_request.md)
