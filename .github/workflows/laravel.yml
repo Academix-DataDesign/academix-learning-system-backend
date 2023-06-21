@@ -20,7 +20,7 @@ jobs:
           php-version: '8.0'
 
       - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-ansi --no-interaction --no-scripts
+        run: composer install --prefer-dist --verbose --no-ansi --no-interaction --no-scripts
 
       - name: Copy environment file
         run: cp .env.example .env
