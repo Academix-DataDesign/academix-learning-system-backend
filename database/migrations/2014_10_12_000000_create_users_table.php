@@ -14,15 +14,15 @@ class CreateUsersTable extends Migration
             $table->id();
             // Constraints
             $table->foreignId('type_id')->default(3)->constrained('types');
-            $table->string('first_name', 255);
-            $table->string('last_name', 255);
+            $table->string('name', 255);
+            $table->string('last_name', 255)->nullable();
             $table->string('email', 255)->unique();
             $table->string('password', 255);
             $table->string('avatar', 255)->default('avatar.png');
             $table->string('license', 255)->nullable();
             $table->text('bio')->nullable();
-            $table->string('town', 255);
-            $table->string('country', 255);
+            $table->string('town', 255)->nullable();
+            $table->string('country', 255)->nullable();
             $table->string('short_bio', 255)->default('Lorem ipsum');
             // Indexes
             $table->index('email');
@@ -32,12 +32,12 @@ class CreateUsersTable extends Migration
 
         DB::table('users')->insert([
             'type_id' => 3,
-            'first_name' => 'Neko',
-            'last_name' => 'Tamo',
-            'email' => 'nekotamo.doe@example.com',
-            'password' => Hash::make("proba123"),
+            'name' => 'Admin',
+            'last_name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make("nekalozinka"),
             'town' => 'Podgorica',
-            'country' => 'Crna Gora',
+            'country' => 'Montenegro',
         ]);
     }
 
