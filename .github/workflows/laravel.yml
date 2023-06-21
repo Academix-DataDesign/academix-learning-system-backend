@@ -1,9 +1,5 @@
+on: push
 name: Laravel CI
-
-on:
-  push:
-    branches:
-      - main
 
 jobs:
   laravel-test:

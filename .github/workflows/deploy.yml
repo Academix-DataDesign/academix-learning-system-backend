@@ -1,0 +1,29 @@
+# on: push
+# name: Laravel CI/CD
+
+# jobs:
+#   web-deploy:
+#     name: Hosting deployment🎉
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Check for latest version🚚
+#       uses: actions/checkout@v2
+
+#     - name: Package installation
+#       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+#     - name: Deleting cache
+#       run: rm -rf bootstrap/cache/*
+
+#     - name: File synchronization📂
+#       uses: SamKirkland/FTP-Deploy-Action@4.3.2
+#       with:
+#         server: ${{ secrets.FTP_SERVER }}
+#         username: ${{ secrets.FTP_USERNAME }}
+#         password: ${{ secrets.FTP_PASSWORD }}
+#         server-dir: backend/
+#         exclude: |
+#           **/.git*
+#           **/.git*/**
+#           **/node_modules/**
+#           **/public/**
