@@ -9,4 +9,5 @@ class Topic extends Model
 {
     use HasFactory;
     protected $fillable = ['topic_name'];
+    public $timestamps = false;
 }

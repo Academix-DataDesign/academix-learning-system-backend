@@ -10,7 +10,6 @@ class CreateVideosTable extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->index('video_id');
             $table->string('content', 255);
             // Timestamps
             $table->timestamps();

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Comment;
+use App\Models\Lesson;
 
 class CommentFactory extends Factory
 {
@@ -13,8 +14,10 @@ class CommentFactory extends Factory
     {
         return [
             'body' => $this->faker->paragraph,
-            'comment_id' => null,
-            'lesson_id' => null,
+            'comment_id' => 1,
+            'lesson_id' => function () {
+                return Lesson::factory()->create()->id;
+            },
         ];
     }
 }

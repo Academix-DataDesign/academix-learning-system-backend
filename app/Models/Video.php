@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class CourseVideo extends Model
+class Video extends Model
 {
     use HasFactory;
     protected $fillable = ['course_id', 'video_id'];

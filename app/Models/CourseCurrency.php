@@ -9,6 +9,7 @@ class CourseCurrency extends Model
 {
     use HasFactory;
     protected $fillable = ['course_id', 'currency_id'];
+    public $timestamps = false;
 
     public function course()
     {

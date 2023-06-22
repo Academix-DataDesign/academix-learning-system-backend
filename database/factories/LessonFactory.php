@@ -21,9 +21,9 @@ class LessonFactory extends Factory
             'section_id' => function () {
                 return Section::factory()->create()->id;
             },
-            /* 'video_id' => function () {
-                return Video::factory()->create->id;
-            }, */
+            'video_id' => function () {
+                return Video::factory()->create()->id;
+            },
         ];
     }
 }
