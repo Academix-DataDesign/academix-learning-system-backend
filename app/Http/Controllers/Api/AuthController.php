@@ -14,26 +14,22 @@ class AuthController extends Controller
     /**
      * Create User
      * @param Request $request
-     * @return User 
+     * @return User
      */
-    public function createUser(Request $request)
+    public function registerUser(Request $request)
     {
         try {
-            //Validated
-            $validateUser = Validator::make(
-                $request->all(),
-                [
-                    'name' => 'required',
-                    'email' => 'required|email|unique:users,email',
-                    'password' => 'required'
-                ]
-            );
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8',
+            ]);
 
-            if ($validateUser->fails()) {
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
-                    'errors' => $validateUser->errors()
+                    'errors' => $validator->errors()
                 ], 401);
             }
 
@@ -46,7 +42,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->accessToken
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -64,7 +60,7 @@ class AuthController extends Controller
     public function loginUser(Request $request)
     {
         try {
-            $validateUser = Validator::make(
+            $validator = Validator::make(
                 $request->all(),
                 [
                     'email' => 'required|email',
@@ -72,11 +68,11 @@ class AuthController extends Controller
                 ]
             );
 
-            if ($validateUser->fails()) {
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
-                    'errors' => $validateUser->errors()
+                    'errors' => $validator->errors()
                 ], 401);
             }
 
@@ -92,7 +88,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->accessToken
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
