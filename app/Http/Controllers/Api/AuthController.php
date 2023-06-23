@@ -43,7 +43,7 @@ class AuthController extends Controller
                 'confirmation_token' => Str::random(40),
             ]);
 
-            Mail::to($user->email)->send(new AccountActivation($user));
+            // Mail::to($user->email)->send(new AccountActivation($user));
 
             return response()->json([
                 'status' => true,

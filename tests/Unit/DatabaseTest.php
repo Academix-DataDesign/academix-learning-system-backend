@@ -15,7 +15,7 @@ class DatabaseTest extends TestCase
     {
         // Create the user record
         $user = User::factory()->create([
-            'first_name' => 'John',
+            'name' => 'John',
             'last_name' => 'Doe',
             'email' => 'johndoe@gmail.com',
             'town' => 'Podgorica',
@@ -27,7 +27,7 @@ class DatabaseTest extends TestCase
         $savedRecord = User::find($user->id);
 
         // Assert that the saved record matches the original data
-        $this->assertEquals('John', $savedRecord->first_name);
+        $this->assertEquals('John', $savedRecord->name);
         $this->assertEquals('Doe', $savedRecord->last_name);
         $this->assertEquals('johndoe@gmail.com', $savedRecord->email);
         $this->assertEquals('Podgorica', $savedRecord->town);
