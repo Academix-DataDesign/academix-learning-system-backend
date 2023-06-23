@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\AccountActivation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -36,8 +39,11 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'confirmation_token' => Str::random(40),
             ]);
+
+            Mail::to($user->email)->send(new AccountActivation($user));
 
             return response()->json([
                 'status' => true,
@@ -50,6 +56,27 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function activateAccount($token)
+    {
+        $user = User::where('confirmation_token', $token)->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid activation token',
+            ], 404);
+        }
+
+        $user->confirmation_token = null;
+        $user->is_active = true;
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Account activated successfully',
+        ], 200);
     }
 
     /**
