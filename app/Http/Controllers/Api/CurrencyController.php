@@ -15,7 +15,7 @@ class CurrencyController extends Controller
     public function index()
     {
         $currencies = Currency::all();
-        return new CategoryResource($currencies);
+        return CategoryResource::collection($currencies);
     }
 
     /**

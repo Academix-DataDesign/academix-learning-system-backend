@@ -15,7 +15,7 @@ class ReleaseResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'instructor' => $this->user->name,
+            'instructor' => $this->instructor->name,
             'title' => $this->title,
             'link' => $this->link,
             'date' => $this->date,

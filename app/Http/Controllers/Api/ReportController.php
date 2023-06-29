@@ -15,7 +15,7 @@ class ReportController extends Controller
     public function index()
     {
         $reports = Report::all();
-        return new ReportResource($reports);
+        return ReportResource::collection($reports);
     }
 
     /**
