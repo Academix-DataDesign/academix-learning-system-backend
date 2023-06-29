@@ -13,7 +13,7 @@ class CourseLevelFactory extends Factory
     public function definition()
     {
         return [
-            'level_name' => $this->faker->word,
+            'name' => $this->faker->word,
         ];
     }
 }
