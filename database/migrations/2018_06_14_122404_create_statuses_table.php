@@ -10,9 +10,9 @@ class CreateStatusesTable extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('status_name', 255);
+            $table->string('name', 255);
             // Indexes
-            $table->index('status_name');
+            $table->index('name');
             // Timestamps
             $table->timestamps();
         });
