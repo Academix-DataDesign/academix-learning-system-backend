@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Newsletter;
 use Illuminate\Http\Request;
+use App\Http\Resources\NewsletterResource;
 
 class NewsletterController extends Controller
 {
@@ -14,7 +15,7 @@ class NewsletterController extends Controller
     public function index()
     {
         $newsletters = Newsletter::all();
-        return response()->json($newsletters);
+        return new NewsletterResource($newsletters);
     }
 
     /**

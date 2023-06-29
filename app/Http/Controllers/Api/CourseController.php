@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Http\Resources\CourseResource;
 
 class CourseController extends Controller
 {
@@ -16,7 +16,7 @@ class CourseController extends Controller
     {
         $courses = Course::all();
 
-        return response()->json($courses);
+        return new CourseResource($courses);
     }
 
     /**

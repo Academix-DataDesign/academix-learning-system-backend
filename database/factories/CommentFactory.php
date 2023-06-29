@@ -14,7 +14,7 @@ class CommentFactory extends Factory
     {
         return [
             'body' => $this->faker->paragraph,
-            'comment_id' => 1,
+            'comment_id' => null,
             'lesson_id' => function () {
                 return Lesson::factory()->create()->id;
             },

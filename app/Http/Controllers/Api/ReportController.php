@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use App\Http\Resources\ReportResource;
 
 class ReportController extends Controller
 {
@@ -14,7 +15,7 @@ class ReportController extends Controller
     public function index()
     {
         $reports = Report::all();
-        return response()->json($reports);
+        return new ReportResource($reports);
     }
 
     /**

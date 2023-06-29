@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Release;
+use App\Http\Resources\ReleaseResource;
 
 class ReleaseController extends Controller
 {
@@ -14,7 +15,7 @@ class ReleaseController extends Controller
     public function index()
     {
         $releases = Release::all();
-        return response()->json($releases);
+        return new ReleaseResource($releases);
     }
 
     /**
