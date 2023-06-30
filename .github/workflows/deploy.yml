@@ -59,7 +59,7 @@ jobs:
         sudo chown -R $USER:www-data /var/www/html/academix-learning-system-backend/storage
         sudo chmod -R ugo+rwX /var/www/html/academix-learning-system-backend/storage
         sudo chown -R $USER:www-data /var/www/html/academix-learning-system-backend/bootstrap/cache
-        sgudo chmod -R ugo+rwX /var/www/html/academix-learning-system-backend/bootstrap/cache
+        sudo chmod -R ugo+rwX /var/www/html/academix-learning-system-backend/bootstrap/cache
 
 
         # Clear Laravel cache and optimize
