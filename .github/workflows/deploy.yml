@@ -29,17 +29,15 @@ jobs:
           echo "File does not exist"
         fi
 
-    # Add additional steps if necessary
-
     - name: Deploy to server
       run: |
-        # Delete existing app directory
-        rm -rf /var/www/html/academix-learning-system-backend
+        # Delete existing app directory with elevated privileges
+        sudo rm -rf /var/www/html/academix-learning-system-backend
 
-        # Clone the project
-        git clone https://github.com/Academix-DataDesign/academix-learning-system-backend.git /var/www/html/academix-learning-system-backend
+        # Clone the project with elevated privileges
+        sudo git clone https://github.com/Academix-DataDesign/academix-learning-system-backend.git /var/www/html/academix-learning-system-backend
 
-        # Change directory to app
+        # Change directory to app with elevated privileges
         cd /var/www/html/academix-learning-system-backend
 
         # Bring back the copied files if .env file exists
@@ -47,9 +45,9 @@ jobs:
           cp $GITHUB_WORKSPACE/.env .
         fi
 
-        # Install dependencies
-        composer install --no-dev --prefer-dist --no-interaction
+        # Install dependencies with elevated privileges
+        sudo composer install --no-dev --prefer-dist --no-interaction
 
         # Set proper permissions (adjust as needed)
-        chown -R www-data:www-data /var/www/html/academix-learning-system-backend/storage
-        chown -R www-data:www-data /var/www/html/academix-learning-system-backend/bootstrap/cache
+        sudo chown -R www-data:www-data /var/www/html/academix-learning-system-backend/storage
+        sudo chown -R www-data:www-data /var/www/html/academix-learning-system-backend/bootstrap/cache
