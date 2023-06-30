@@ -3,7 +3,7 @@ name: Auto deployment
 on:
   push:
     branches:
-      - main
+      - feature_auto_deployment
 
 jobs:
   deploy:
