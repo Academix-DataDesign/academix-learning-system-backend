@@ -1,29 +1,49 @@
-# on: push
-# name: Laravel CI/CD
+name: Auto deployment
 
-# jobs:
-#   web-deploy:
-#     name: Hosting deployment🎉
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Check for latest version🚚
-#       uses: actions/checkout@v2
+on:
+  push:
+    branches:
+      - main
 
-#     - name: Package installation
-#       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-#     - name: Deleting cache
-#       run: rm -rf bootstrap/cache/*
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-#     - name: File synchronization📂
-#       uses: SamKirkland/FTP-Deploy-Action@4.3.2
-#       with:
-#         server: ${{ secrets.FTP_SERVER }}
-#         username: ${{ secrets.FTP_USERNAME }}
-#         password: ${{ secrets.FTP_PASSWORD }}
-#         server-dir: backend/
-#         exclude: |
-#           **/.git*
-#           **/.git*/**
-#           **/node_modules/**
-#           **/public/**
+    - name: FTP File synchronization📂
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+
+    - name: Copy necessary files
+      run: |
+        cp /var/www/html/academix-learning-system-backend/.env $GITHUB_WORKSPACE/.env
+
+    # Add additional steps if necessary
+
+    - name: Deploy to server
+      run: |
+        # Delete existing app directory
+        rm -rf /var/www/html/academix-learning-system-backend
+
+        # Clone the project
+        git clone https://github.com/Academix-DataDesign/academix-learning-system-backend.git /var/www/html/academix-learning-system-backend
+
+        # Change directory to app
+        cd /var/www/html/academix-learning-system-backend
+
+        # Bring back the copied files
+        cp $GITHUB_WORKSPACE/.env .
+
+        # Install dependencies
+        composer install --no-dev --prefer-dist --no-interaction
+
+        # Set proper permissions (adjust as needed)
+        chown -R www-data:www-data /var/www/html/academix-learning-system-backend/storage
+        chown -R www-data:www-data /var/www/html/academix-learning-system-backend/bootstrap/cache
+
