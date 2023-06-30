@@ -52,7 +52,8 @@ jobs:
         fi
 
         # Install dependencies with elevated privileges
-        sudo composer install --no-dev --prefer-dist --no-interaction -i --ignore-platform-reqs
+        export COMPOSER_ALLOW_SUPERUSER=1
+        sudo composer install --no-dev --prefer-dist --no-interaction --ignore-platform-reqs
 
         # Set proper permissions (adjust as needed)
         sudo chown -R www-data:www-data /var/www/html/academix-learning-system-backend/storage
