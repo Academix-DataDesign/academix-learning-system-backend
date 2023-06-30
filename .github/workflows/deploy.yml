@@ -32,7 +32,6 @@ jobs:
 
     - name: Set permissions
       run: |
-        sudo chown -R $USER:$USER /var/www/html/academix-learning-system-backend
         sudo chmod -R 755 /var/www/html/academix-learning-system-backend/storage
         sudo chmod -R 755 /var/www/html/academix-learning-system-backend/bootstrap/cache
 
