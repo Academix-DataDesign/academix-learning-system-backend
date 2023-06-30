@@ -51,3 +51,6 @@ jobs:
         # Set proper permissions (adjust as needed)
         sudo chown -R www-data:www-data /var/www/html/academix-learning-system-backend/storage
         sudo chown -R www-data:www-data /var/www/html/academix-learning-system-backend/bootstrap/cache
+
+        # Clear Laravel cache and optimize
+        php artisan optimize
