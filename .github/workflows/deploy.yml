@@ -1,65 +1,94 @@
-name: Auto deployment
+# name: Auto deployment
+
+# on:
+#   push:
+#     branches:
+#       - feature_auto_deployment
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v2
+
+#     # - name: FTP File synchronization📂
+#     #   uses: SamKirkland/FTP-Deploy-Action@4.3.2
+#       with:
+#         server: ${{ secrets.FTP_SERVER }}
+#         username: ${{ secrets.FTP_USERNAME }}
+#         password: ${{ secrets.FTP_PASSWORD }}
+
+
+#     - name: Check if .env file exists
+#       run: |
+#         if [ -f "/var/www/html/academix-learning-system-backend/.env" ]; then
+#           echo "File exists"
+#           cp /var/www/html/academix-learning-system-backend/.env $GITHUB_WORKSPACE/.env
+#         else
+#           echo "File does not exist"
+#         fi
+
+#     # - name: Set permissions
+#     #   run: |
+#     #     sudo chmod -R 755 /var/www/html/academix-learning-system-backend/storage
+#     #     sudo chmod -R 755 /var/www/html/academix-learning-system-backend/bootstrap/cache
+
+#     - name: Deploy to server
+#       run: |
+#         # Delete existing app directory with elevated privileges
+#         sudo rm -rf /var/www/html/academix-learning-system-backend
+
+#         # Clone the project with elevated privileges
+#         sudo git clone https://github.com/Academix-DataDesign/academix-learning-system-backend.git /var/www/html/academix-learning-system-backend
+
+#         # Change directory to app with elevated privileges
+#         cd /var/www/html/academix-learning-system-backend
+
+#         # Bring back the copied files if .env file exists
+#         if [ -f "$GITHUB_WORKSPACE/.env" ]; then
+#           cp $GITHUB_WORKSPACE/.env .
+#         fi
+
+#         # Install dependencies with elevated privileges
+#         export COMPOSER_ALLOW_SUPERUSER=1
+#         sudo composer install --no-dev --prefer-dist --no-interaction --ignore-platform-reqs
+
+#         # Set proper permissions (adjust as needed)
+#         sudo chown -R $USER:www-data /var/www/html/academix-learning-system-backend/storage
+#         sudo chmod -R ugo+rwX /var/www/html/academix-learning-system-backend/storage
+#         sudo chown -R $USER:www-data /var/www/html/academix-learning-system-backend/bootstrap/cache
+#         sudo chmod -R ugo+rwX /var/www/html/academix-learning-system-backend/bootstrap/cache
+
+#         # Clear Laravel cache and optimize
+#         php artisan optimize
+
 
 on:
   push:
     branches:
       - feature_auto_deployment
-
+name: Automatski deployment🚀
 jobs:
-  deploy:
+  web-deploy:
+    name: Hosting deployment🎉
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
+    - name: Provjera najnovije verzije🚚
       uses: actions/checkout@v2
 
-    # - name: FTP File synchronization📂
-    #   uses: SamKirkland/FTP-Deploy-Action@4.3.2
+    - name: Instalacija paketa
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+    - name: Brisanje keša
+      run: sudo rm -rf bootstrap/cache/*
+
+    - name: Sinhronizacija fajlova📂
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: academix-learning-system-backend/
 
-
-    - name: Check if .env file exists
-      run: |
-        if [ -f "/var/www/html/academix-learning-system-backend/.env" ]; then
-          echo "File exists"
-          cp /var/www/html/academix-learning-system-backend/.env $GITHUB_WORKSPACE/.env
-        else
-          echo "File does not exist"
-        fi
-
-    - name: Set permissions
-      run: |
-        sudo chmod -R 755 /var/www/html/academix-learning-system-backend/storage
-        sudo chmod -R 755 /var/www/html/academix-learning-system-backend/bootstrap/cache
-
-    - name: Deploy to server
-      run: |
-        # Delete existing app directory with elevated privileges
-        sudo rm -rf /var/www/html/academix-learning-system-backend
-
-        # Clone the project with elevated privileges
-        sudo git clone https://github.com/Academix-DataDesign/academix-learning-system-backend.git /var/www/html/academix-learning-system-backend
-
-        # Change directory to app with elevated privileges
-        cd /var/www/html/academix-learning-system-backend
-
-        # Bring back the copied files if .env file exists
-        if [ -f "$GITHUB_WORKSPACE/.env" ]; then
-          cp $GITHUB_WORKSPACE/.env .
-        fi
-
-        # Install dependencies with elevated privileges
-        export COMPOSER_ALLOW_SUPERUSER=1
-        sudo composer install --no-dev --prefer-dist --no-interaction --ignore-platform-reqs
-
-        # Set proper permissions (adjust as needed)
-        sudo chown -R $USER:www-data /var/www/html/academix-learning-system-backend/storage
-        sudo chmod -R ugo+rwX /var/www/html/academix-learning-system-backend/storage
-        sudo chown -R $USER:www-data /var/www/html/academix-learning-system-backend/bootstrap/cache
-        sudo chmod -R ugo+rwX /var/www/html/academix-learning-system-backend/bootstrap/cache
-
-        # Clear Laravel cache and optimize
-        php artisan optimize
