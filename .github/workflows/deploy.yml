@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # - name: Checkout code
-    #   uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     # - name: FTP File synchronization📂
     #   uses: SamKirkland/FTP-Deploy-Action@4.3.2
@@ -20,10 +20,14 @@ jobs:
     #     username: ${{ secrets.FTP_USERNAME }}
     #     password: ${{ secrets.FTP_PASSWORD }}
 
-    - name: Copy necessary files
+    - name: Check if .env file exists
       run: |
-        cp /var/www/html/academix-learning-system-backend/.env $GITHUB_WORKSPACE/.env
-
+        if [ -f "/var/www/html/academix-learning-system-backend/.env" ]; then
+          echo "File exists"
+          cp /var/www/html/academix-learning-system-backend/.env $GITHUB_WORKSPACE/.env
+        else
+          echo "File does not exist"
+        fi
 
     # Add additional steps if necessary
 
@@ -38,8 +42,10 @@ jobs:
         # Change directory to app
         cd /var/www/html/academix-learning-system-backend
 
-        # Bring back the copied files
-        cp $GITHUB_WORKSPACE/.env .
+        # Bring back the copied files if .env file exists
+        if [ -f "$GITHUB_WORKSPACE/.env" ]; then
+          cp $GITHUB_WORKSPACE/.env .
+        fi
 
         # Install dependencies
         composer install --no-dev --prefer-dist --no-interaction
@@ -47,4 +53,3 @@ jobs:
         # Set proper permissions (adjust as needed)
         chown -R www-data:www-data /var/www/html/academix-learning-system-backend/storage
         chown -R www-data:www-data /var/www/html/academix-learning-system-backend/bootstrap/cache
-
