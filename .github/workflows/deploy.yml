@@ -20,6 +20,7 @@ jobs:
     #     username: ${{ secrets.FTP_USERNAME }}
     #     password: ${{ secrets.FTP_PASSWORD }}
 
+
     - name: Check if .env file exists
       run: |
         if [ -f "/var/www/html/academix-learning-system-backend/.env" ]; then
