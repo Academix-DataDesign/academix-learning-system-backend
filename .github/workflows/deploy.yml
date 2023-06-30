@@ -24,6 +24,7 @@ jobs:
       run: |
         cp /var/www/html/academix-learning-system-backend/.env $GITHUB_WORKSPACE/.env
 
+
     # Add additional steps if necessary
 
     - name: Deploy to server
