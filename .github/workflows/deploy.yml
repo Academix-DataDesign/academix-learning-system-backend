@@ -30,10 +30,10 @@ jobs:
           echo "File does not exist"
         fi
 
-    - name: Set permissions
-      run: |
-        sudo chmod -R 755 /var/www/html/academix-learning-system-backend/storage
-        sudo chmod -R 755 /var/www/html/academix-learning-system-backend/bootstrap/cache
+    # - name: Set permissions
+    #   run: |
+    #     sudo chmod -R 755 /var/www/html/academix-learning-system-backend/storage
+    #     sudo chmod -R 755 /var/www/html/academix-learning-system-backend/bootstrap/cache
 
     - name: Deploy to server
       run: |
