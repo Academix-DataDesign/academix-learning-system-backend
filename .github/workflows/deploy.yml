@@ -85,6 +85,6 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./academix-learning-system-backend/
+        local-dir: /var/www/html/academix-learning-system-backend/
         server-dir: /var/www/html/academix-learning-system-backend/
         protocol: ftp
