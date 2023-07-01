@@ -86,6 +86,6 @@ jobs:
 
       - name: Update server code
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@54.37.204.231 "cd /var/www/html/academix-learning-system-backend/ && sudo git pull origin"
+          ssh -o StrictHostKeyChecking=no ubuntu@54.37.204.231 "cd /var/www/html/academix-learning-system-backend/ && sudo git pull origin main"
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
