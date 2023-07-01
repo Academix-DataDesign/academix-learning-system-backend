@@ -79,7 +79,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Configure known hosts
-        run: echo "server_ip_address ssh-rsa <your_host_key>" >> ~/.ssh/known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          touch ~/.ssh/known_hosts
+          ssh-keyscan -t rsa server_ip_address >> ~/.ssh/known_hosts
 
       - name: Update server code
         run: |
