@@ -63,28 +63,23 @@
 
 #         # Clear Laravel cache and optimize
 #         php artisan optimize
-
 name: Deploy to Apache Server
 
 on:
   push:
     branches:
-      - feature_auto_deployment
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: /var/www/html/academix-learning-system-backend/
-        server-dir: /var/www/html/academix-learning-system-backend/
-        protocol: ftp
+      - name: Update server code
+        run: |
+          ssh ubuntu@54.37.204.231 "cd /var/www/html/academix-learning-system-backend/ && git pull origin"
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
