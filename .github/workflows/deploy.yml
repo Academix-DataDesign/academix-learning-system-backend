@@ -64,28 +64,27 @@
 #         # Clear Laravel cache and optimize
 #         php artisan optimize
 
+name: Deploy to Apache Server
+
 on:
   push:
     branches:
       - feature_auto_deployment
 
-name: Automatski deployment🚀
-
 jobs:
-  web-deploy:
-    name: Hosting deployment🎉
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-      - name: Clear cache
-        run: sudo rm -rf bootstrap/cache/*
-
-      - name: Deploy to server
-        run: |
-          rsync -r --delete-after --exclude='.git' /var/www/html/academix-learning-system-backend/ ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:/var/www/html/academix-learning-system-backend/
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: /var/www/html/academix-learning-system-backend
+        server-dir: /var/www/html/academix-learning-system-backend
+        args: --delete
