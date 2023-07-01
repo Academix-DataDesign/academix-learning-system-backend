@@ -78,8 +78,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Configure known hosts
+        run: echo "server_ip_address ssh-rsa <your_host_key>" >> ~/.ssh/known_hosts
+
       - name: Update server code
         run: |
-          ssh ubuntu@54.37.204.231 "cd /var/www/html/academix-learning-system-backend/ && git pull origin"
+          ssh -o StrictHostKeyChecking=no ubuntu@54.37.204.231 "cd /var/www/html/academix-learning-system-backend/ && git pull origin"
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
