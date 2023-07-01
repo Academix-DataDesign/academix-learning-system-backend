@@ -82,7 +82,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           touch ~/.ssh/known_hosts
-          ssh-keyscan -t rsa server_ip_address >> ~/.ssh/known_hosts
+          ssh-keyscan -t rsa 54.37.204.231 >> ~/.ssh/known_hosts
 
       - name: Update server code
         run: |
