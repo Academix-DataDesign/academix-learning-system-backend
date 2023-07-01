@@ -1,4 +1,4 @@
-name: Auto deployment
+name: Deploy to Apache Server
 
 on:
   push:
@@ -10,41 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: FTP File synchronization📂
-      uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-
-    - name: Copy necessary files
-      run: |
-        cp /var/www/html/academix-learning-system-backend/.env $GITHUB_WORKSPACE/.env
-
-
-    # Add additional steps if necessary
-
-    - name: Deploy to server
-      run: |
-        # Delete existing app directory
-        rm -rf /var/www/html/academix-learning-system-backend
-
-        # Clone the project
-        git clone https://github.com/Academix-DataDesign/academix-learning-system-backend.git /var/www/html/academix-learning-system-backend
-
-        # Change directory to app
-        cd /var/www/html/academix-learning-system-backend
-
-        # Bring back the copied files
-        cp $GITHUB_WORKSPACE/.env .
-
-        # Install dependencies
-        composer install --no-dev --prefer-dist --no-interaction
-
-        # Set proper permissions (adjust as needed)
-        chown -R www-data:www-data /var/www/html/academix-learning-system-backend/storage
-        chown -R www-data:www-data /var/www/html/academix-learning-system-backend/bootstrap/cache
-
+      - name: Configure known hosts
+        run: |
+          mkdir -p ~/.ssh
+          touch ~/.ssh/known_hosts
+          ssh-keyscan -t rsa 54.37.204.231 >> ~/.ssh/known_hosts
+      - name: Update server code
+        run: |
+          if sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ubuntu@54.37.204.231 "cd /var/www/html/academix-learning-system-backend/ && sudo git pull --rebase origin main"; then
+            echo "SSH connection and code update successful."
+          else
+            echo "Failed to establish SSH connection or update the code."
+          fi
