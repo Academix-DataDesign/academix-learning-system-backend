@@ -68,26 +68,24 @@ on:
   push:
     branches:
       - feature_auto_deployment
+
 name: Automatski deployment🚀
+
 jobs:
   web-deploy:
     name: Hosting deployment🎉
     runs-on: ubuntu-latest
+
     steps:
-    - name: Provjera najnovije verzije🚚
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Instalacija paketa
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Install dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    - name: Brisanje keša
-      run: sudo rm -rf bootstrap/cache/*
+      - name: Clear cache
+        run: sudo rm -rf bootstrap/cache/*
 
-    - name: Sinhronizacija fajlova📂
-      uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: /var/www/html/academix-learning-system-backend/
-
+      - name: Deploy to server
+        run: |
+          rsync -r --delete-after --exclude='.git' /var/www/html/academix-learning-system-backend/ ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:/var/www/html/academix-learning-system-backend/
