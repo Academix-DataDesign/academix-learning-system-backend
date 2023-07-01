@@ -6,10 +6,11 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\LanguageController;
 use App\Http\Controllers\Api\CategoryController;
-use App\Models\Category;
-use App\Models\Currency;
-use App\Models\Language;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\CurrencyController;
+use App\Http\Controllers\Api\NewsletterController;
+use App\Http\Controllers\Api\ReleaseController;
+use App\Http\Controllers\Api\ReportController;
 
 
 // Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request $request) {

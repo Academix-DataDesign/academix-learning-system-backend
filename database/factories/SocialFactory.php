@@ -12,8 +12,8 @@ class SocialFactory extends Factory
     public function definition()
     {
         return [
-            'social_icon' => $this->faker->word,
-            'social_name' => $this->faker->word,
+            'icon' => $this->faker->word,
+            'name' => $this->faker->word,
         ];
     }
 }

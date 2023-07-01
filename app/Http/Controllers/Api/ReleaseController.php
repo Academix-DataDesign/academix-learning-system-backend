@@ -15,7 +15,7 @@ class ReleaseController extends Controller
     public function index()
     {
         $releases = Release::all();
-        return new ReleaseResource($releases);
+        return ReleaseResource::collection($releases);
     }
 
     /**

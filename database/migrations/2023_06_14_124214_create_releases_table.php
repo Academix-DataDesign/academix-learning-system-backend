@@ -16,6 +16,7 @@ class CreateReleasesTable extends Migration
             $table->string('link', 255);
             // Indexes
             $table->index('instructor_id');
+            $table->timestamps();
             $table->dateTime('date');
         });
     }

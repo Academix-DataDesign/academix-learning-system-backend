@@ -1,29 +1,28 @@
-# on: push
-# name: Laravel CI/CD
+name: Deploy to Apache Server
 
-# jobs:
-#   web-deploy:
-#     name: Hosting deployment🎉
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Check for latest version🚚
-#       uses: actions/checkout@v2
+on:
+  push:
+    branches:
+      - main
 
-#     - name: Package installation
-#       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-#     - name: Deleting cache
-#       run: rm -rf bootstrap/cache/*
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-#     - name: File synchronization📂
-#       uses: SamKirkland/FTP-Deploy-Action@4.3.2
-#       with:
-#         server: ${{ secrets.FTP_SERVER }}
-#         username: ${{ secrets.FTP_USERNAME }}
-#         password: ${{ secrets.FTP_PASSWORD }}
-#         server-dir: backend/
-#         exclude: |
-#           **/.git*
-#           **/.git*/**
-#           **/node_modules/**
-#           **/public/**
+      - name: Configure known hosts
+        run: |
+          mkdir -p ~/.ssh
+          touch ~/.ssh/known_hosts
+          ssh-keyscan -t rsa 54.37.204.231 >> ~/.ssh/known_hosts
+
+      - name: Update server code
+        run: |
+          if sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ubuntu@54.37.204.231 "cd /var/www/html/academix-learning-system-backend/ && sudo git pull origin main"; then
+            echo "SSH connection and code update successful."
+          else
+            echo "Failed to establish SSH connection or update the code."
+          fi

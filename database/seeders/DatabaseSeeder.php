@@ -18,7 +18,16 @@ use App\Models\{
     CourseRequirement,
     InstructorCourse,
     Topic,
-    Comment
+    Comment,
+    Category,
+    CourseLevel,
+    Currency,
+    Language,
+    Release,
+    Social,
+    Status,
+    Type,
+    Video
 };
 
 class DatabaseSeeder extends Seeder
@@ -42,5 +51,14 @@ class DatabaseSeeder extends Seeder
         InstructorCourse::factory()->count(30)->create();
         Topic::factory()->count(10)->create();
         Comment::factory()->count(50)->create();
+        Category::factory()->count(50)->create();
+        CourseLevel::factory()->count(50)->create();
+        Currency::factory()->count(50)->create();
+        Language::factory()->count(50)->create();
+        Release::factory()->count(50)->create();
+        Social::factory()->count(50)->create();
+        Status::factory()->count(50)->create();
+        Type::factory()->count(50)->create();
+        Video::factory()->count(50)->create();
     }
 }

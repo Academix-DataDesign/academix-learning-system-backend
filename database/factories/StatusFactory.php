@@ -12,7 +12,7 @@ class StatusFactory extends Factory
     public function definition()
     {
         return [
-            'status_name' => $this->faker->word,
+            'name' => $this->faker->word,
         ];
     }
 }
