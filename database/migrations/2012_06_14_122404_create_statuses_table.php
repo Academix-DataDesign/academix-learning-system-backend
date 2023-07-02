@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateStatusesTable extends Migration
@@ -16,6 +17,11 @@ class CreateStatusesTable extends Migration
             // Timestamps
             $table->timestamps();
         });
+
+        DB::table('statuses')->insert([
+            ['name' => 'inactive'],
+            ['name' => 'active'],
+        ]);
     }
 
     public function down()

@@ -14,6 +14,7 @@ class CreateUsersTable extends Migration
             $table->id();
             // Constraints
             $table->foreignId('type_id')->default(3)->constrained('types');
+            $table->foreignId('status_id')->default(1)->constrained('statuses');
             $table->string('name', 255);
             $table->string('last_name', 255)->nullable();
             $table->string('email', 255)->unique();
@@ -32,6 +33,7 @@ class CreateUsersTable extends Migration
 
         DB::table('users')->insert([
             'type_id' => 3,
+            'status_id' => 2,
             'name' => 'Admin',
             'last_name' => 'Admin',
             'email' => 'admin@gmail.com',

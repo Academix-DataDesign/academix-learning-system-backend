@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\AccountActivation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +44,7 @@ class AuthController extends Controller
                 'confirmation_token' => Str::random(40),
             ]);
 
-            // Mail::to($user->email)->send(new AccountActivation($user));
+            Mail::to($user->email)->send(new AccountActivation($user));
 
             return response()->json([
                 'status' => true,
@@ -70,7 +71,7 @@ class AuthController extends Controller
         }
 
         $user->confirmation_token = null;
-        $user->is_active = true;
+        $user->status_id = 2;
         $user->save();
 
         return response()->json([
@@ -112,11 +113,18 @@ class AuthController extends Controller
                 if (!Auth::attempt($request->only(['email', 'password']))) {
                     return response()->json([
                         'status' => false,
-                        'message' => 'Email & Password does not match with our record.',
+                        'message' => 'Email & Password do not match with our records.',
                     ], 401);
                 }
 
                 $user = User::where('email', $request->email)->first();
+
+                if ($user->status_id === 1) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Account is not active.',
+                    ], 401);
+                }
 
                 $responseData = [
                     'status' => true,
