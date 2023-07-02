@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
-
+use Illuminate\Support\Facades\Cache;
 
 class CategoryController extends Controller
 {
@@ -16,9 +16,20 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $cacheKey = 'categories';
+        $expirationTime = 60;
+
+        if (Cache::has($cacheKey)) {
+            $categories = Cache::get($cacheKey);
+        } else {
+            $categories = Category::all();
+
+            Cache::put($cacheKey, $categories, $expirationTime);
+        }
+
         return CategoryResource::collection($categories);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -65,6 +76,6 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Cache::forget('categories');
     }
 }

@@ -11,11 +11,11 @@ use App\Http\Controllers\Api\CurrencyController;
 use App\Http\Controllers\Api\NewsletterController;
 use App\Http\Controllers\Api\ReleaseController;
 use App\Http\Controllers\Api\ReportController;
+use Illuminate\Http\Request;
 
-
-// Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request $request) {
+    return $request->user();
+});
 
 Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
     Route::controller(AuthController::class)->group(function () {

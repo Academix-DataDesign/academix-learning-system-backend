@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -85,42 +86,53 @@ class AuthController extends Controller
      */
     public function loginUser(Request $request)
     {
-        try {
-            $validator = Validator::make(
-                $request->all(),
-                [
-                    'email' => 'required|email',
-                    'password' => 'required'
-                ]
-            );
+        $cacheKey = 'user_login:' . $request->email;
+        $expirationTime = 60;
 
-            if ($validator->fails()) {
+        if (Cache::has($cacheKey)) {
+            $responseData = Cache::get($cacheKey);
+        } else {
+            try {
+                $validator = Validator::make(
+                    $request->all(),
+                    [
+                        'email' => 'required|email',
+                        'password' => 'required'
+                    ]
+                );
+
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'validation error',
+                        'errors' => $validator->errors()
+                    ], 401);
+                }
+
+                if (!Auth::attempt($request->only(['email', 'password']))) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Email & Password does not match with our record.',
+                    ], 401);
+                }
+
+                $user = User::where('email', $request->email)->first();
+
+                $responseData = [
+                    'status' => true,
+                    'message' => 'User Logged In Successfully',
+                    'token' => $user->createToken("API TOKEN")->accessToken
+                ];
+
+                Cache::put($cacheKey, $responseData, $expirationTime);
+            } catch (\Throwable $th) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validator->errors()
-                ], 401);
+                    'message' => $th->getMessage()
+                ], 500);
             }
-
-            if (!Auth::attempt($request->only(['email', 'password']))) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Email & Password does not match with our record.',
-                ], 401);
-            }
-
-            $user = User::where('email', $request->email)->first();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->accessToken
-            ], 200);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
         }
+
+        return response()->json($responseData, $responseData['status'] ? 200 : 401);
     }
 }
