@@ -18,10 +18,9 @@ jobs:
           mkdir -p ~/.ssh
           touch ~/.ssh/known_hosts
           ssh-keyscan -t rsa 54.37.204.231 >> ~/.ssh/known_hosts
-
       - name: Update server code
         run: |
-          if sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ubuntu@54.37.204.231 "cd /var/www/html/academix-learning-system-backend/ && sudo git fetch && git checkout main && git reset --hard/origin/main && composer update; then
+          if sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ubuntu@54.37.204.231 "cd /var/www/html/academix-learning-system-backend/ && sudo git pull --rebase origin main && composer update"; then
             echo "SSH connection and code update successful."
           else
             echo "Failed to establish SSH connection or update the code."
