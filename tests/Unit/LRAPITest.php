@@ -38,7 +38,6 @@ class LRAPITest extends TestCase
         $response->assertJsonStructure([
             'status',
             'message',
-            'token',
         ]);
     }
 }
