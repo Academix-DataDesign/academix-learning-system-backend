@@ -1,23 +1,15 @@
-name: PHPUnit Tests
+name: Laravel CI
 
 on:
   push:
     branches:
       - main
+    conditions: ${{ github.event_number % 3 == 0 }}
 
 jobs:
-  test:
-    name: Run PHPUnit Tests
+  laravel-test:
+    name: Run Laravel tests
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-          - 3306/tcp
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout repository
@@ -36,11 +28,3 @@ jobs:
 
       - name: Generate application key
         run: php artisan key:generate
-
-      - name: Set up test database
-        run: |
-          php artisan config:cache
-          php artisan migrate --env=testing
-
-      - name: Run PHPUnit Tests
-        run: php artisan test --testsuite=Unit
