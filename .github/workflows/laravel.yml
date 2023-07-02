@@ -10,8 +10,6 @@ jobs:
     name: Run Laravel tests
     runs-on: ubuntu-latest
 
-    if: ${{ github.event.number % 3 == 0 }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
