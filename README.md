@@ -23,7 +23,7 @@ Academix is built as a learning management system (LMS) that provides a user-fri
 
 To get started with Academix, follow these steps:
 
-1. Visit our website at [https://academix.me](https://academix.me).
+1. Visit our website at [https://academix.me](https://api.academix.me).
 2. Sign up for an account.
 3. Explore the available courses and choose the ones that interest you.
 4. Start learning and enhancing your skills!
