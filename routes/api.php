@@ -22,19 +22,17 @@ Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request
     return $request->user();
 });
 
-Route::group(['prefix' => 'v1', 'middleware' => ['api', 'auth:api']], function () {
-    Route::controller(AuthController::class)->group(function () {
-        Route::post('/register', 'registerUser')->name('register');
-        Route::post('/login', 'loginUser')->name('login');
+Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
+    Route::post('/register', [AuthController::class, 'registerUser'])->name('register');
+    Route::post('/login', [AuthController::class, 'loginUser'])->name('login');
 
-        Route::get('/users', [UserController::class, 'index']);
-        Route::get('/types', [TypeController::class, 'index']);
-        Route::get('/languages', [LanguageController::class, 'index']);
-        Route::get('/courses', [CourseController::class, 'index']);
-        Route::get('/categories', [CategoryController::class, 'index']);
-        Route::get('/currencies', [CurrencyController::class, 'index']);
-        Route::get('/reports', [ReportController::class, 'index']);
-        Route::get('/releases', [ReleaseController::class, 'index']);
-        Route::get('/newsletters', [NewsletterController::class, 'index']);
-    });
-});;
+    Route::apiResource('/users', UserController::class);
+    Route::apiResource('/courses', CourseController::class);
+    Route::apiResource('/categories', CategoryController::class);
+    Route::apiResource('/types', TypeController::class);
+    Route::apiResource('/languages', LanguageController::class);
+    Route::apiResource('/currencies', CurrencyController::class);
+    Route::apiResource('/reports', ReportController::class);
+    Route::apiResource('/releases', ReleaseController::class);
+    Route::apiResource('/newsletters', NewsletterController::class);
+});

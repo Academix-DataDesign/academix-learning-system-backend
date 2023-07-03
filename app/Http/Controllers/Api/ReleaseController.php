@@ -9,12 +9,18 @@ use App\Http\Resources\ReleaseResource;
 
 class ReleaseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $releases = Release::all();
+
         return ReleaseResource::collection($releases);
     }
 

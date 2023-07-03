@@ -6,15 +6,32 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Type;
 use App\Http\Resources\TypeResource;
+use Illuminate\Support\Facades\Redis;
 
 class TypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $types = Type::all();
+        $cacheKey = 'types';
+        $expirationTime = 60;
+
+        if (Redis::exists($cacheKey)) {
+            $types = json_decode(Redis::get($cacheKey));
+        } else {
+            $types = Type::all();
+
+            Redis::set($cacheKey, json_encode($types));
+            Redis::expire($cacheKey, $expirationTime);
+        }
+
         return TypeResource::collection($types);
     }
 

@@ -6,15 +6,32 @@ use App\Http\Controllers\Controller;
 use App\Models\Language;
 use Illuminate\Http\Request;
 use App\Http\Resources\LanguageResource;
+use Illuminate\Support\Facades\Redis;
 
 class LanguageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $languages = Language::all();
+        $cacheKey = 'languages';
+        $expirationTime = 60;
+
+        if (Redis::exists($cacheKey)) {
+            $languages = json_decode(Redis::get($cacheKey));
+        } else {
+            $languages = Language::all();
+        }
+
+        Redis::set($cacheKey, json_encode($languages));
+        Redis::expire($cacheKey, $expirationTime);
+
         return LanguageResource::collection($languages);
     }
 

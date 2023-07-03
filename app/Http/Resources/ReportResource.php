@@ -15,10 +15,10 @@ class ReportResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'course' => $this->course->title,
-            'student' => $this->student->name,
-            'title' => $this->title,
-            'body' => $this->body,
+            'course' => $this->course->title ?? null,
+            'student' => $this->student->name ?? null,
+            'title' => $this->title ?? null,
+            'body' => $this->body ?? null,
         ];
     }
 }

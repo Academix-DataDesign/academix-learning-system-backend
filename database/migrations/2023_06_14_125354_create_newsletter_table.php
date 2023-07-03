@@ -21,6 +21,6 @@ class CreateNewsletterTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('news2023_06_14_123743_create_reports_tableletter');
+        Schema::dropIfExists('newsletter');
     }
 }

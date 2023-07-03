@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -19,12 +25,13 @@ class CategoryController extends Controller
         $cacheKey = 'categories';
         $expirationTime = 60;
 
-        if (Cache::has($cacheKey)) {
-            $categories = Cache::get($cacheKey);
+        if (Redis::exists($cacheKey)) {
+            $categories = json_decode(Redis::get($cacheKey));
         } else {
             $categories = Category::all();
 
-            Cache::put($cacheKey, $categories, $expirationTime);
+            Redis::set($cacheKey, json_encode($categories));
+            Redis::expire($cacheKey, $expirationTime);
         }
 
         return CategoryResource::collection($categories);

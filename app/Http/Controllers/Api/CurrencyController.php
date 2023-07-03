@@ -5,17 +5,23 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use Illuminate\Http\Request;
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\CurrencyResource;
 
 class CurrencyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $currencies = Currency::all();
-        return CategoryResource::collection($currencies);
+
+        return CurrencyResource::collection($currencies);
     }
 
     /**

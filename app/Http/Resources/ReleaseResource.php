@@ -15,10 +15,10 @@ class ReleaseResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'instructor' => $this->instructor->name,
-            'title' => $this->title,
-            'link' => $this->link,
-            'date' => $this->date,
+            'instructor' => $this->instructor->name ?? null,
+            'title' => $this->title ?? null,
+            'link' => $this->link ?? null,
+            'date' => $this->date ?? null,
         ];
     }
 }

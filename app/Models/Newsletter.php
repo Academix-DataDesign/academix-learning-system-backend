@@ -9,8 +9,7 @@ class Newsletter extends Model
 {
     use HasFactory;
     protected $table = 'newsletter';
-
-    protected $fillable = ['student_id'];
+    protected $guarded = [];
 
     public function student()
     {

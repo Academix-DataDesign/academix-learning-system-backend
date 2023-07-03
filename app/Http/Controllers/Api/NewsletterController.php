@@ -15,6 +15,7 @@ class NewsletterController extends Controller
     public function index()
     {
         $newsletters = Newsletter::all();
+
         return NewsletterResource::collection($newsletters);
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Report extends Model
 {
     use HasFactory;
-    protected $fillable = ['course_id', 'student_id', 'report_title', 'report_body'];
+    protected $guarded = [];
 
     public function course()
     {

@@ -6,15 +6,29 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class CourseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $courses = Course::with('category', 'status', 'language', 'instructor', 'level')->get();
+        $key = 'courses';
+
+        if (Redis::exists($key)) {
+            $courses = json_decode(Redis::get($key));
+        } else {
+            $courses = Course::with('category', 'status', 'language', 'instructor', 'level')->get();
+
+            Redis::set($key, json_encode($courses));
+        }
 
         return CourseResource::collection($courses);
     }

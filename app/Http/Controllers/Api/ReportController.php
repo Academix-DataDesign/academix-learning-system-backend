@@ -9,12 +9,18 @@ use App\Http\Resources\ReportResource;
 
 class ReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $reports = Report::with('course', 'student')->get();
+
         return ReportResource::collection($reports);
     }
 
