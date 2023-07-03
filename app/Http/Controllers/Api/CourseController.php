@@ -15,6 +15,7 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::with('category', 'status', 'language', 'instructor', 'level')->get();
+
         return CourseResource::collection($courses);
     }
 
