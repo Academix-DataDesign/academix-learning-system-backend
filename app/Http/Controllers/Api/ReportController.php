@@ -14,7 +14,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $reports = Report::all();
+        $reports = Report::with('course', 'student')->get();
         return ReportResource::collection($reports);
     }
 
