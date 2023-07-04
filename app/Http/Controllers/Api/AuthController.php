@@ -143,4 +143,14 @@ class AuthController extends Controller
 
         return response()->json($responseData, $responseData['status'] ? 200 : 401);
     }
+
+    public function logoutUser(Request $request)
+    {
+        Auth::logout();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Logged out successfully!',
+        ]);
+    }
 }
