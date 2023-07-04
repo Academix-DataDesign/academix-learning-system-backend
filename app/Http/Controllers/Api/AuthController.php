@@ -45,8 +45,8 @@ class AuthController extends Controller
 
             $response = $client->request('GET', 'https://mailcheck.p.rapidapi.com/?domain=' . urlencode($email), [
                 'headers' => [
-                    'X-RapidAPI-Host' => 'mailcheck.p.rapidapi.com',
-                    'X-RapidAPI-Key' => 'bcfdee6c9dmsh4e3903236f08f3ep1ec2e0jsn25dfcc1e60d7',
+                    'X-RapidAPI-Host' => env('RAPIDAPI_HOST'),
+                    'X-RapidAPI-Key' => env('RAPIDAPI_KEY'),
                 ],
             ]);
 
