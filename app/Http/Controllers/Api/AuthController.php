@@ -8,10 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Mail\AccountActivation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
+use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class AuthController extends Controller
 {
@@ -20,6 +22,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return User
      */
+
     public function registerUser(Request $request)
     {
         try {
@@ -32,25 +35,46 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation error',
                     'errors' => $validator->errors()
                 ], 401);
             }
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'confirmation_token' => Str::random(40),
+            $email = $request->email;
+
+            $client = new Client();
+
+            $response = $client->request('GET', 'https://mailcheck.p.rapidapi.com/?domain=' . urlencode($email), [
+                'headers' => [
+                    'X-RapidAPI-Host' => env('RAPIDAPI_HOST'),
+                    'X-RapidAPI-Key' => env('RAPIDAPI_KEY'),
+                ],
             ]);
 
-            Mail::to($user->email)->send(new AccountActivation($user));
+            $responseBody = $response->getBody()->getContents();
+            $responseJson = json_decode($responseBody);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'User Created Successfully',
-                'token' => $user->createToken("API TOKEN")->accessToken
-            ], 200);
+            if ($responseJson->valid) {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $email,
+                    'password' => Hash::make($request->password),
+                    'confirmation_token' => Str::random(40),
+                ]);
+
+                Mail::to($user->email)->send(new AccountActivation($user));
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'User Created Successfully',
+                    'token' => $user->createToken("API TOKEN")->accessToken
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Email does not exists'
+                ], 400);
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -126,11 +150,18 @@ class AuthController extends Controller
                     ], 401);
                 }
 
+                $accessToken = $user->createToken("API TOKEN")->accessToken;
+
                 $responseData = [
                     'status' => true,
                     'message' => 'User Logged In Successfully',
-                    'token' => $user->createToken("API TOKEN")->accessToken
+                    'token' => $accessToken
                 ];
+
+                $cookie = new Cookie('api_token', $accessToken, time() + (60 * 60), '/', null, false, true);
+
+                $response = response()->json($responseData, 200);
+                $response->headers->setCookie($cookie);
 
                 Cache::put($cacheKey, $responseData, $expirationTime);
             } catch (\Throwable $th) {
@@ -142,5 +173,15 @@ class AuthController extends Controller
         }
 
         return response()->json($responseData, $responseData['status'] ? 200 : 401);
+    }
+
+    public function logoutUser(Request $request)
+    {
+        Auth::logout();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Logged out successfully!',
+        ]);
     }
 }
