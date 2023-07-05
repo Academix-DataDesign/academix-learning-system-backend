@@ -29,7 +29,6 @@ class CategoryController extends Controller
             $categories = json_decode(Redis::get($cacheKey));
         } else {
             $categories = Category::all();
-
             Redis::set($cacheKey, json_encode($categories));
             Redis::expire($cacheKey, $expirationTime);
         }

@@ -20,14 +20,15 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $key = 'courses';
+        $cacheKey = 'courses';
+        $expirationTime = 60;
 
-        if (Redis::exists($key)) {
-            $courses = json_decode(Redis::get($key));
+        if (Redis::exists($cacheKey)) {
+            $courses = json_decode(Redis::get($cacheKey));
         } else {
             $courses = Course::with('category', 'status', 'language', 'instructor', 'level')->get();
-
-            Redis::set($key, json_encode($courses));
+            Redis::set($cacheKey, json_encode($courses));
+            Redis::expire($cacheKey, $expirationTime);
         }
 
         return CourseResource::collection($courses);
