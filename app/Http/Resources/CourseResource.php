@@ -26,8 +26,8 @@ class CourseResource extends JsonResource
             'duration' => $this->duration,
             'wishes' => $this->wishes,
             'price' => $this->price,
-            'certification' => $this->certification,
-            //'bestseller' => $this->bestseller,
+            'certification' => $this->certification && true,
+            'bestseller' => $this->bestseller && true,
         ];
     }
 }

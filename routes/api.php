@@ -25,6 +25,7 @@ Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request
 Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
     Route::post('/register', [AuthController::class, 'registerUser'])->name('register');
     Route::post('/login', [AuthController::class, 'loginUser'])->name('login');
+    Route::post('/logout', [AuthController::class, 'logoutUser'])->name('logout');
 
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/courses', CourseController::class);
