@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Http\Resources\ReportResource;
+use Illuminate\Support\Facades\Redis;
 
 class ReportController extends Controller
 {
@@ -19,7 +20,16 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $reports = Report::with('course', 'student')->get();
+        $cacheKey = 'reports';
+        $expirationTime = 60;
+
+        if (Redis::exists($cacheKey)) {
+            $reports = json_decode(Redis::get($cacheKey));
+        } else {
+            $reports = Report::with('course', 'student')->get();
+            Redis::set($cacheKey, json_encode($reports));
+            Redis::expire($cacheKey, $expirationTime);
+        }
 
         return ReportResource::collection($reports);
     }
