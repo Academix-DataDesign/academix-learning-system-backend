@@ -16,6 +16,7 @@ class UserController extends Controller
     {
         // Display all users
         $users = User::all();
+
         return UserResource::collection($users);
     }
 

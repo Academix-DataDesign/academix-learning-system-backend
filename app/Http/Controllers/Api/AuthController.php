@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Http\Controllers\Api;
@@ -7,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mail\AccountActivation;
+use App\Models\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -138,10 +138,15 @@ class AuthController extends Controller
 
                 Cache::put($cacheKey, $responseData, $expirationTime);
 
-                // Save the token in a cookie
+                $ipAddress = $request->ip();
+
+                $session = new Session();
+                $session->user_id = $user->id;
+                $session->ip_address = $ipAddress;
+                $session->save();
+
                 $cookie = new Cookie('api_token', $accessToken, time() + (60 * 60 * 24), '/', null, false, true);
 
-                // Add the cookie to the response
                 $response = response()->json($responseData, 200);
                 $response->headers->setCookie($cookie);
 
@@ -155,5 +160,16 @@ class AuthController extends Controller
         }
 
         return response()->json($responseData, $responseData['status'] ? 200 : 401);
+    }
+
+
+    public function logoutUser(Request $request)
+    {
+        Auth::logout();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Logged out successfully!',
+        ]);
     }
 }
