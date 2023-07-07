@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\AccountActivation;
 use App\Models\Session;
 use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class AuthController extends Controller
+class AuthenticationController extends Controller
 {
     /**
      * Create User
@@ -34,25 +35,46 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation error',
                     'errors' => $validator->errors()
                 ], 401);
             }
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'confirmation_token' => Str::random(40),
+            $email = $request->email;
+
+            $client = new Client();
+
+            $response = $client->request('GET', 'https://mailcheck.p.rapidapi.com/?domain=' . urlencode($email), [
+                'headers' => [
+                    'X-RapidAPI-Host' => 'mailcheck.p.rapidapi.com',
+                    'X-RapidAPI-Key' => 'bcfdee6c9dmsh4e3903236f08f3ep1ec2e0jsn25dfcc1e60d7',
+                ],
             ]);
 
-            Mail::to($user->email)->send(new AccountActivation($user));
+            $responseBody = $response->getBody()->getContents();
+            $responseJson = json_decode($responseBody);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'User Created Successfully',
-                'token' => $user->createToken("API TOKEN")->accessToken
-            ], 200);
+            if ($responseJson->valid) {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $email,
+                    'password' => Hash::make($request->password),
+                    'confirmation_token' => Str::random(40),
+                ]);
+
+                Mail::to($user->email)->send(new AccountActivation($user));
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'User Created Successfully',
+                    'token' => $user->createToken("API TOKEN")->accessToken
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Email does not exists'
+                ], 400);
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -60,6 +82,7 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
 
     public function activateAccount($token)
     {
