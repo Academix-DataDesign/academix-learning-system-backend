@@ -44,6 +44,4 @@ class Course extends Model
     {
         return $this->hasMany(CourseRequirement::class);
     }
-
-    // Define other relationships and methods as needed
 }
