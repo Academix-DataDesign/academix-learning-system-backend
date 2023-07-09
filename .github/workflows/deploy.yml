@@ -20,7 +20,7 @@ jobs:
           ssh-keyscan -t rsa ${{ secrets.IP_ADDRESS }} >> ~/.ssh/known_hosts
       - name: Update server code
         run: |
-          if sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.IP_ADDRESS }} "cd /var/www/html/academix-learning-system-backend/ && sudo git reset --hard HEAD && composer update"; then
+          if sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.IP_ADDRESS }} "cd /var/www/html/academix-learning-system-backend/ && sudo git reset --hard HEAD && git pull origin main && sudo composer update"; then
             echo "SSH connection and code update successful."
           else
             echo "Failed to establish SSH connection or update the code."
