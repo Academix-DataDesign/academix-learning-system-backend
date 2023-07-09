@@ -110,79 +110,142 @@ class AuthenticationController extends Controller
      * @param Request $request
      * @return User
      */
+    // public function loginUser(Request $request)
+    // {
+    //     $cacheKey = 'user_login:' . $request->email;
+    //     $expirationTime = 60;
+
+    //     if (Cache::has($cacheKey)) {
+    //         $responseData = Cache::get($cacheKey);
+    //     } else {
+    //         try {
+    //             $validator = Validator::make(
+    //                 $request->all(),
+    //                 [
+    //                     'email' => 'required|email',
+    //                     'password' => 'required'
+    //                 ]
+    //             );
+
+    //             if ($validator->fails()) {
+    //                 return response()->json([
+    //                     'status' => false,
+    //                     'message' => 'validation error',
+    //                     'errors' => $validator->errors()
+    //                 ], 401);
+    //             }
+
+    //             if (!Auth::attempt($request->only(['email', 'password']))) {
+    //                 return response()->json([
+    //                     'status' => false,
+    //                     'message' => 'Email & Password do not match with our records.',
+    //                 ], 401);
+    //             }
+
+    //             $user = User::where('email', $request->email)->first();
+
+    //             if ($user->status_id === 1) {
+    //                 return response()->json([
+    //                     'status' => false,
+    //                     'message' => 'Account is not active.',
+    //                 ], 401);
+    //             }
+
+    //             $accessToken = $user->createToken("API TOKEN")->accessToken;
+
+    //             $responseData = [
+    //                 'status' => true,
+    //                 'message' => 'User Logged In Successfully',
+    //                 'token' => $accessToken
+    //             ];
+
+    //             // Cache::put($cacheKey, $responseData, $expirationTime);
+
+    //             // $ipAddress = $request->ip();
+
+    //             // $session = new Session();
+    //             // $session->user_id = $user->id;
+    //             // $session->ip_address = $ipAddress;
+    //             // $session->save();
+
+    //             $cookie = new Cookie('api_token', $accessToken, time() + (60 * 60 * 24), '/', null, false, true);
+
+    //             $response = response()->json($responseData, 200);
+    //             $response->headers->setCookie($cookie);
+
+    //             return $response;
+    //         } catch (\Throwable $th) {
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message' => $th->getMessage()
+    //             ], 500);
+    //         }
+    //     }
+
+    //     return response()->json($responseData, $responseData['status'] ? 200 : 401);
+    // }
     public function loginUser(Request $request)
     {
-        $cacheKey = 'user_login:' . $request->email;
-        $expirationTime = 60;
+        try {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'email' => 'required|email',
+                    'password' => 'required'
+                ]
+            );
 
-        if (Cache::has($cacheKey)) {
-            $responseData = Cache::get($cacheKey);
-        } else {
-            try {
-                $validator = Validator::make(
-                    $request->all(),
-                    [
-                        'email' => 'required|email',
-                        'password' => 'required'
-                    ]
-                );
-
-                if ($validator->fails()) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'validation error',
-                        'errors' => $validator->errors()
-                    ], 401);
-                }
-
-                if (!Auth::attempt($request->only(['email', 'password']))) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Email & Password do not match with our records.',
-                    ], 401);
-                }
-
-                $user = User::where('email', $request->email)->first();
-
-                if ($user->status_id === 1) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Account is not active.',
-                    ], 401);
-                }
-
-                $accessToken = $user->createToken("API TOKEN")->accessToken;
-
-                $responseData = [
-                    'status' => true,
-                    'message' => 'User Logged In Successfully',
-                    'token' => $accessToken
-                ];
-
-                Cache::put($cacheKey, $responseData, $expirationTime);
-
-                $ipAddress = $request->ip();
-
-                $session = new Session();
-                $session->user_id = $user->id;
-                $session->ip_address = $ipAddress;
-                $session->save();
-
-                $cookie = new Cookie('api_token', $accessToken, time() + (60 * 60 * 24), '/', null, false, true);
-
-                $response = response()->json($responseData, 200);
-                $response->headers->setCookie($cookie);
-
-                return $response;
-            } catch (\Throwable $th) {
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => $th->getMessage()
-                ], 500);
+                    'message' => 'Validation error',
+                    'errors' => $validator->errors()
+                ], 401);
             }
-        }
 
-        return response()->json($responseData, $responseData['status'] ? 200 : 401);
+            if (!Auth::attempt($request->only(['email', 'password']))) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Email & Password do not match with our records.',
+                ], 401);
+            }
+
+            $user = User::where('email', $request->email)->first();
+
+            if ($user->status_id === 1) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Account is not active.',
+                ], 401);
+            }
+
+            $accessToken = $user->createToken("API TOKEN")->accessToken;
+
+            $responseData = [
+                'status' => true,
+                'message' => 'User Logged In Successfully',
+                'token' => $accessToken
+            ];
+
+            // $ipAddress = $request->ip();
+
+            // $session = new Session();
+            // $session->user_id = $user->id;
+            // $session->ip_address = $ipAddress;
+            // $session->save();
+
+            $cookie = new Cookie('api_token', $accessToken, time() + (60 * 60 * 24), '/', null, false, true);
+
+            $response = response()->json($responseData, 200);
+            $response->headers->setCookie($cookie);
+
+            return $response;
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
 
