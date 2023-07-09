@@ -20,19 +20,19 @@ class ReportController extends Controller
      */
     public function index()
     {
-        // $cacheKey = 'reports';
-        // $expirationTime = 60;
+        $cacheKey = 'reports';
+        $expirationTime = 60;
 
-        // if (Redis::exists($cacheKey)) {
-        //     $reports = json_decode(Redis::get($cacheKey));
-        // } else {
-        //     $reports = Report::with('course', 'student')->paginate(10);
-        //     Redis::set($cacheKey, json_encode($reports));
-        //     Redis::expire($cacheKey, $expirationTime);
-        // }
+        if (Redis::exists($cacheKey)) {
+            $reports = json_decode(Redis::get($cacheKey));
+        } else {
+            $reports = Report::with('course', 'student')->get();
+            Redis::set($cacheKey, json_encode($reports));
+            Redis::expire($cacheKey, $expirationTime);
+        }
 
-        // return ReportResource::collection($reports);
-        return ReportResource::collection(Report::paginate(10));
+        return ReportResource::collection($reports);
+        // return ReportResource::collection(Report::paginate(10));
     }
 
 
