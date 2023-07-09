@@ -17,10 +17,10 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           touch ~/.ssh/known_hosts
-          ssh-keyscan -t rsa ${{ secrets.SSH_PASSWORD }} >> ~/.ssh/known_hosts
+          ssh-keyscan -t rsa ${{ secrets.IP_ADDRESS }} >> ~/.ssh/known_hosts
       - name: Update server code
         run: |
-          if sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SSH_PASSWORD }} "cd /var/www/html/academix-learning-system-backend/ && sudo git reset --hard HEAD && composer update"; then
+          if sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.IP_ADDRESS }} "cd /var/www/html/academix-learning-system-backend/ && sudo git reset --hard HEAD && composer update"; then
             echo "SSH connection and code update successful."
           else
             echo "Failed to establish SSH connection or update the code."
