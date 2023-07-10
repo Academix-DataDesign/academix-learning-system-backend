@@ -83,7 +83,6 @@ class AuthenticationController extends Controller
         }
     }
 
-
     public function activateAccount($token)
     {
         $user = User::where('confirmation_token', $token)->first();

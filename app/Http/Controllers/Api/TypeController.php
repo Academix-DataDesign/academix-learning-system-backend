@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Type;
 use App\Http\Resources\TypeResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Validator;
 
 class TypeController extends Controller
 {
@@ -48,7 +51,28 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:categories|max:255',
+        ], [
+            'name.unique' => 'The category name already exists.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => 'error-0003',
+                'timestamp' => now(),
+                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'message' => 'Validation error',
+                'errors' => $validator->errors(),
+                'path' => url()->current(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $type = Type::create([
+            'name' => $request->name,
+        ]);
+
+        return new TypeResource($type);
     }
 
     /**
@@ -56,7 +80,13 @@ class TypeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $type = Type::findOrFail($id);
+
+            return new TypeResource($type);
+        } catch (ModelNotFoundException $exception) {
+            throw new ModelNotFoundException('Type not found', $exception->getCode(), $exception);
+        }
     }
 
     /**
@@ -72,7 +102,31 @@ class TypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $type = Type::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:categories|max:255',
+        ], [
+            'name.unique' => 'The category name already exists.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => 'error-0003',
+                'timestamp' => now(),
+                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'message' => 'Validation error',
+                'errors' => $validator->errors(),
+                'path' => url()->current(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $type->name = $request->name;
+        $type->save();
+
+        Redis::del('types');
+
+        return new TypeResource($type);
     }
 
     /**
@@ -80,6 +134,14 @@ class TypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $type = Type::findOrFail($id);
+        $type->delete();
+
+        Redis::del('categories');
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Type deleted successfully.',
+        ], Response::HTTP_OK);
     }
 }
