@@ -15,14 +15,15 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth:api')->except('search');
+        $this->middleware('auth:api');
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->input('per_page', 10);
         $cacheKey = 'categories';
         $expirationTime = 60;
 
@@ -33,8 +34,15 @@ class CategoryController extends Controller
             Redis::set($cacheKey, json_encode($categories));
             Redis::expire($cacheKey, $expirationTime);
         }
+        $filterName = $request->input('name');
+        $query = Category::query();
 
-        return CategoryResource::collection($categories);
+        if ($filterName) {
+            $query->where('name', 'like', '%' . $filterName . '%');
+        }
+        $paginatedCategories = $query->paginate($perPage);
+
+        return CategoryResource::collection($paginatedCategories);
     }
 
     /**
