@@ -2,7 +2,7 @@
 
 use Illuminate\{
     Support\Facades\Route,
-    Http\Request,
+    Http\Request
 };
 
 use App\Http\Controllers\Api\AuthenticationController;
@@ -16,7 +16,7 @@ use App\Http\Controllers\Api\{
     CurrencyController,
     NewsletterController,
     ReleaseController,
-    ReportController
+    ReportController,
 };
 
 Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request $request) {
@@ -31,6 +31,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/courses', CourseController::class);
     Route::apiResource('/categories', CategoryController::class);
+    Route::get('/categories-search', [CategoryController::class, 'search']);
     Route::apiResource('/types', TypeController::class);
     Route::apiResource('/languages', LanguageController::class);
     Route::apiResource('/currencies', CurrencyController::class);

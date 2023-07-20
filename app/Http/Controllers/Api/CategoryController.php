@@ -15,7 +15,7 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api')->except('search');
     }
 
     /**
@@ -125,5 +125,33 @@ class CategoryController extends Controller
             'status' => true,
             'message' => 'Category deleted successfully.',
         ], Response::HTTP_OK);
+    }
+
+    public function search(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => 'error-0003',
+                'timestamp' => now(),
+                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'message' => 'Validation error',
+                'errors' => $validator->errors(),
+                'path' => url()->current(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $query = Category::query();
+
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        $categories = $query->get();
+
+        return CategoryResource::collection($categories);
     }
 }
