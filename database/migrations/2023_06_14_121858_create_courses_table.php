@@ -11,7 +11,7 @@ class CreateCoursesTable extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             // Constraints
-            $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('status_id')->constrained('statuses');
             $table->foreignId('language_id')->constrained('languages');
             $table->foreignId('instructor_id')->constrained('users');

@@ -5,18 +5,17 @@ use Illuminate\{
     Http\Request
 };
 
-use App\Http\Controllers\Api\AuthenticationController;
-
 use App\Http\Controllers\Api\{
-    UserController,
-    TypeController,
-    LanguageController,
-    CategoryController,
-    CourseController,
-    CurrencyController,
-    NewsletterController,
-    ReleaseController,
-    ReportController,
+    AuthenticationAPIController,
+    CategoryAPIController,
+    CourseAPIController,
+    CurrencyAPIController,
+    LanguageAPIController,
+    NewsletterAPIController,
+    ReleaseAPIController,
+    ReportAPIController,
+    TypeAPIController,
+    UserAPIController,
 };
 
 Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request $request) {
@@ -24,18 +23,18 @@ Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request
 });
 
 Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
-    Route::post('/register', [AuthenticationController::class, 'registerUser'])->name('register');
-    Route::post('/login', [AuthenticationController::class, 'loginUser'])->name('login');
-    Route::post('/logout', [AuthenticationController::class, 'logoutUser'])->name('logout');
+    Route::post('/register', [AuthenticationAPIController::class, 'registerUser'])->name('register');
+    Route::post('/login', [AuthenticationAPIController::class, 'loginUser'])->name('login');
+    Route::post('/logout', [AuthenticationAPIController::class, 'logoutUser'])->name('logout');
 
-    Route::apiResource('/users', UserController::class);
-    Route::apiResource('/courses', CourseController::class);
-    Route::apiResource('/categories', CategoryController::class);
-    Route::get('/categories-search', [CategoryController::class, 'search']);
-    Route::apiResource('/types', TypeController::class);
-    Route::apiResource('/languages', LanguageController::class);
-    Route::apiResource('/currencies', CurrencyController::class);
-    Route::apiResource('/reports', ReportController::class);
-    Route::apiResource('/releases', ReleaseController::class);
-    Route::apiResource('/newsletters', NewsletterController::class);
+    Route::apiResource('/users', UserAPIController::class);
+    Route::apiResource('/courses', CourseAPIController::class);
+    Route::apiResource('/categories', CategoryAPIController::class);
+    Route::get('/categories-search', [CategoryAPIController::class, 'search']);
+    Route::apiResource('/types', TypeAPIController::class);
+    Route::apiResource('/languages', LanguageAPIController::class);
+    Route::apiResource('/currencies', CurrencyAPIController::class);
+    Route::apiResource('/reports', ReportAPIController::class);
+    Route::apiResource('/releases', ReleaseAPIController::class);
+    Route::apiResource('/newsletters', NewsletterAPIController::class);
 });
