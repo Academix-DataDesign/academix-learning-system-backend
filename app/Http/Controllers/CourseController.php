@@ -1,25 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Course;
-use App\Models\Currency;
-use App\Models\Newsletter;
-use App\Models\Release;
-use App\Models\Report;
-use App\Models\Type;
-use App\Models\Language;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.index');
+        $courses = Course::with('category', 'instructor', 'level', 'status', 'language')->paginate(5);
+
+        return view('pages.Courses.index', compact('courses'));
     }
 
     /**
