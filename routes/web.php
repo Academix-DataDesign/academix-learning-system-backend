@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Api\AuthenticationAPIController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\LanguageController;
@@ -17,16 +18,21 @@ Route::get('/', function () {
 });
 
 Route::get('/activate/{token}', [AuthenticationAPIController::class, 'activateAccount'])->name('activate');
-Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 
+Route::prefix('admin/dashboard')->middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('admin-dashboard');
+
+    Route::resource('course', CourseController::class);
+    Route::resource('type', TypeController::class);
+    Route::resource('language', LanguageController::class);
+    Route::resource('currency', CurrencyController::class);
+    Route::resource('report', ReportController::class);
+    Route::resource('release', ReleaseController::class);
+    Route::resource('newsletter', NewsletterController::class);
+});
+
+// Auth routes
 Auth::routes();
-
-Route::resource('course', CourseController::class);
-Route::resource('type', TypeController::class);
-Route::resource('language', LanguageController::class);
-Route::resource('currency', CurrencyController::class);
-Route::resource('report', ReportController::class);
-Route::resource('release', ReleaseController::class);
-Route::resource('newsletter', NewsletterController::class);
+Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

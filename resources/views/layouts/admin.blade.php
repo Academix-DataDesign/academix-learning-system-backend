@@ -239,7 +239,7 @@
             </ul> --}}
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Categories
@@ -257,49 +257,49 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                  <a href={{ route('course.index') }} class="nav-link {{ request()->is('course') ? 'active' : '' }}">
+                  <a href={{ route('course.index') }} class="nav-link {{ request()->is('admin/dashboard/course') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Courses</p>
                   <span class="badge badge-info right">{{ $counts['courses'] }}</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href={{ route('type.index') }} class="nav-link {{ request()->is('type') ? 'active' : '' }}">
+                <a href={{ route('type.index') }} class="nav-link {{ request()->is('admin/dashboard/type') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Types</p>
                 <span class="badge badge-info right">{{ $counts['types'] }}</span>
               </a>
             </li>
             <li class="nav-item">
-              <a href={{ route('language.index') }} class="nav-link {{ request()->is('language') ? 'active' : '' }}">
+              <a href={{ route('language.index') }} class="nav-link {{ request()->is('admin/dashboard/language') ? 'active' : '' }}">
               <i class="far fa-circle nav-icon"></i>
               <p>Languages</p>
               <span class="badge badge-info right">{{ $counts['languages'] }}</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href={{ route('currency.index') }} class="nav-link {{ request()->is('currency') ? 'active' : '' }}">
+            <a href={{ route('currency.index') }} class="nav-link {{ request()->is('admin/dashboard/currency') ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
             <p>Currencies</p>
             <span class="badge badge-info right">{{ $counts['currencies'] }}</span>
           </a>
         </li>
         <li class="nav-item">
-          <a href={{ route('report.index') }} class="nav-link {{ request()->is('report') ? 'active' : '' }}">
+          <a href={{ route('report.index') }} class="nav-link {{ request()->is('admin/dashboard/report') ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Reports</p>
           <span class="badge badge-info right">{{ $counts['reports'] }}</span>
         </a>
       </li>
       <li class="nav-item">
-        <a href={{ route('release.index') }} class="nav-link {{ request()->is('release') ? 'active' : '' }}">
+        <a href={{ route('release.index') }} class="nav-link {{ request()->is('admin/dashboard/release') ? 'active' : '' }}">
         <i class="far fa-circle nav-icon"></i>
         <p>Releases</p>
         <span class="badge badge-info right">{{ $counts['releases'] }}</span>
       </a>
     </li>
     <li class="nav-item">
-      <a href={{ route('newsletter.index') }} class="nav-link {{ request()->is('newsletter') ? 'active' : '' }}">
+      <a href={{ route('newsletter.index') }} class="nav-link {{ request()->is('admin/dashboard/newsletter') ? 'active' : '' }}">
       <i class="far fa-circle nav-icon"></i>
       <p>Newsletters</p>
       <span class="badge badge-info right">{{ $counts['newsletters'] }}</span>
@@ -742,8 +742,8 @@
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-header">MISCELLANEOUS</li>
+          </li> --}}
+          {{-- <li class="nav-header">MISCELLANEOUS</li>
           <li class="nav-item">
             <a href="iframe.html" class="nav-link">
               <i class="nav-icon fas fa-ellipsis-h"></i>
@@ -820,15 +820,15 @@
               <i class="fas fa-circle nav-icon"></i>
               <p>Level 1</p>
             </a>
-          </li>
-          <li class="nav-header">LABELS</li>
+          </li> --}}
+          <li class="nav-header">MORE</li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href={{ route('logout') }} class="nav-link">
               <i class="nav-icon far fa-circle text-danger"></i>
-              <p class="text">Important</p>
+              <p class="text">Log out</p>
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-circle text-warning"></i>
               <p>Warning</p>

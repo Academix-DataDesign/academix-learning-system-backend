@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -37,5 +38,15 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function logout(Request $request)
+    {
+        Session::flash('logged', 'You have been successfully logged out. See you next time!');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        $this->guard()->logout();
+        return $this->loggedOut($request) ?: redirect('/');
     }
 }
