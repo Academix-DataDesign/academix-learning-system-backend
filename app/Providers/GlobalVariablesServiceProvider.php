@@ -9,6 +9,8 @@ use App\Models\Release;
 use App\Models\Report;
 use App\Models\Type;
 use App\Models\Language;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,16 +29,32 @@ class GlobalVariablesServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // View::composer('*', function ($view) {
+        //     $counts = [
+        //         'courses' => Course::count(),
+        //         'types' => Type::count(),
+        //         'languages' => Language::count(),
+        //         'currencies' => Currency::count(),
+        //         'reports' => Report::count(),
+        //         'releases' => Release::count(),
+        //         'newsletters' => Newsletter::count(),
+        //     ];
+
+        //     $view->with('counts', $counts);
+        // });
+
         View::composer('*', function ($view) {
-            $counts = [
-                'courses' => Course::count(),
-                'types' => Type::count(),
-                'languages' => Language::count(),
-                'currencies' => Currency::count(),
-                'reports' => Report::count(),
-                'releases' => Release::count(),
-                'newsletters' => Newsletter::count(),
-            ];
+            $counts = Cache::remember('counts', now()->addMinutes(10), function () {
+                return [
+                    'courses' => Course::query()->count(),
+                    'types' => Type::query()->count(),
+                    'languages' => Language::query()->count(),
+                    'currencies' => Currency::query()->count(),
+                    'reports' => Report::query()->count(),
+                    'releases' => Release::query()->count(),
+                    'newsletters' => Newsletter::query()->count(),
+                ];
+            });
 
             $view->with('counts', $counts);
         });

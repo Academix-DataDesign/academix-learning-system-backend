@@ -19,6 +19,7 @@
         "predis/predis": "^2.2"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.8",
         "beyondcode/laravel-query-detector": "^1.7",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.0",
