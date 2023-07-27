@@ -23,9 +23,9 @@ Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request
 });
 
 Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
-    // Route::post('/register', [AuthenticationAPIController::class, 'registerUser'])->name('register');
-    // Route::post('/login', [AuthenticationAPIController::class, 'loginUser'])->name('login');
-    // Route::post('/logout', [AuthenticationAPIController::class, 'logoutUser'])->name('logout');
+    Route::post('/register', [AuthenticationAPIController::class, 'registerUser'])->name('register2');
+    Route::post('/login', [AuthenticationAPIController::class, 'loginUser'])->name('login2');
+    Route::post('/logout', [AuthenticationAPIController::class, 'logoutUser'])->name('logout2');
 
     Route::apiResource('/users', UserAPIController::class);
     Route::apiResource('/courses', CourseAPIController::class);
