@@ -3,6 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
+use App\Models\Currency;
+use App\Models\Newsletter;
+use App\Models\Release;
+use App\Models\Report;
+use App\Models\Type;
+use App\Models\Language;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,7 +19,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        $counts = [
+            'courses' => Course::count(),
+            'types' => Type::count(),
+            'languages' => Language::count(),
+            'currencies' => Currency::count(),
+            'reports' => Report::count(),
+            'releases' => Release::count(),
+            'newsletters' => Newsletter::count(),
+        ];
+
+        return view('admin.index', compact('counts'));
     }
 
     /**
