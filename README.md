@@ -6,6 +6,10 @@
 ## What is it?
 Academix is a comprehensive online learning platform that offers a wide range of courses to enhance your knowledge and skills. Explore our platform and sign up now to start your learning journey.
 
+<img src="https://i.postimg.cc/13hJ8fLw/1.png" style="max-width: 750px;margin-bottom: 20px" />
+<img src="https://i.postimg.cc/bNH32z85/2.png" style="max-width: 750px;" />
+
+
 ## About it?
 
 Academix is built as a learning management system (LMS) that provides a user-friendly and interactive environment for online education. Our platform aims to make learning accessible to everyone, offering a diverse selection of courses across various subjects.

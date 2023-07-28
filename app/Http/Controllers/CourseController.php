@@ -13,8 +13,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $paginationValue = GlobalVariable::where('name', 'pagination')->value('value');
-        $courses = Course::with('category', 'instructor', 'level', 'status', 'language')->paginate($paginationValue);
+        $courses = Course::with('category', 'instructor', 'level', 'status', 'language')->paginate(5);
 
         return view('pages.Courses.index', compact('courses'));
     }

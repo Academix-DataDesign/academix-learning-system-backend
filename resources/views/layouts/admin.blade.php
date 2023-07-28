@@ -173,14 +173,13 @@
       <img src={{ asset('assets/logo.png') }} alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Dashboard panel</span>
     </a>
-k
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="d-flex justify-content-center">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="img-circle elevation-2" alt="User Image">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
             <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -254,49 +253,49 @@ k
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                  <a href={{ route('web.courses.index') }} class="nav-link {{ request()->is('admin/dashboard/course') ? 'active' : '' }}">
+                  <a href={{ route('web.courses.index') }} class="nav-link {{ request()->is('admin/dashboard/courses') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Courses</p>
                   <span class="badge badge-info right">{{ $counts['courses'] }}</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href={{ route('web.types.index') }} class="nav-link {{ request()->is('admin/dashboard/type') ? 'active' : '' }}">
+                <a href={{ route('web.types.index') }} class="nav-link {{ request()->is('admin/dashboard/types') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Types</p>
                 <span class="badge badge-info right">{{ $counts['types'] }}</span>
               </a>
             </li>
             <li class="nav-item">
-              <a href={{ route('web.languages.index') }} class="nav-link {{ request()->is('admin/dashboard/language') ? 'active' : '' }}">
+              <a href={{ route('web.languages.index') }} class="nav-link {{ request()->is('admin/dashboard/languages') ? 'active' : '' }}">
               <i class="far fa-circle nav-icon"></i>
               <p>Languages</p>
               <span class="badge badge-info right">{{ $counts['languages'] }}</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href={{ route('web.currencies.index') }} class="nav-link {{ request()->is('admin/dashboard/currency') ? 'active' : '' }}">
+            <a href={{ route('web.currencies.index') }} class="nav-link {{ request()->is('admin/dashboard/currencies') ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
             <p>Currencies</p>
             <span class="badge badge-info right">{{ $counts['currencies'] }}</span>
           </a>
         </li>
         <li class="nav-item">
-          <a href={{ route('web.reports.index') }} class="nav-link {{ request()->is('admin/dashboard/report') ? 'active' : '' }}">
+          <a href={{ route('web.reports.index') }} class="nav-link {{ request()->is('admin/dashboard/reports') ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Reports</p>
           <span class="badge badge-info right">{{ $counts['reports'] }}</span>
         </a>
       </li>
       <li class="nav-item">
-        <a href={{ route('web.releases.index') }} class="nav-link {{ request()->is('admin/dashboard/release') ? 'active' : '' }}">
+        <a href={{ route('web.releases.index') }} class="nav-link {{ request()->is('admin/dashboard/releases') ? 'active' : '' }}">
         <i class="far fa-circle nav-icon"></i>
         <p>Releases</p>
         <span class="badge badge-info right">{{ $counts['releases'] }}</span>
       </a>
     </li>
     <li class="nav-item">
-      <a href={{ route('web.newsletters.index') }} class="nav-link {{ request()->is('admin/dashboard/newsletter') ? 'active' : '' }}">
+      <a href={{ route('web.newsletters.index') }} class="nav-link {{ request()->is('admin/dashboard/newsletters') ? 'active' : '' }}">
       <i class="far fa-circle nav-icon"></i>
       <p>Newsletters</p>
       <span class="badge badge-info right">{{ $counts['newsletters'] }}</span>
@@ -851,7 +850,7 @@ k
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Analytics</h1>
+            <h1 class="m-0">@yield('title')</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

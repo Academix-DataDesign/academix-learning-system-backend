@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+
+@section('title')
+<h1>Courses</h1>
+@stop
+
 @section('content')
 
 <div class="table-responsive"  style="padding: 20px">
