@@ -819,11 +819,15 @@
           </li> --}}
           <li class="nav-header">MORE</li>
           <li class="nav-item">
-            <a href={{ route('logout') }} class="nav-link">
-              <i class="nav-icon far fa-circle text-danger"></i>
-              <p class="text">Log out</p>
-            </a>
+            <form action="{{route('logout') }}" method="POST">
+              @csrf
+              <button type="Submit" class="nav-link">
+                <i class="nav-icon far fa-circle text-danger"></i>
+                <p class="text">Log out</p>
+              </button>
+            </form>
           </li>
+
           {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-circle text-warning"></i>
