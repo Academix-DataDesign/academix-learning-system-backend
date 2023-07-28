@@ -24,6 +24,8 @@
                 var labels = data.labels;
                 var users = data.users;
 
+                var courses = data.courses;
+
                 const chartData = {
                     labels: labels,
                     datasets: [{
@@ -31,6 +33,11 @@
                         backgroundColor: '#dc3545',
                         borderColor: '#dc3545',
                         data: users,
+                    }, {
+                        label: 'Number of courses',
+                        backgroundColor: '#007bff',
+                        borderColor: '#007bff',
+                        data: courses, 
                     }]
                 };
 

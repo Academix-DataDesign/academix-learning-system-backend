@@ -3,6 +3,7 @@
 // app/Http/Controllers/ApiController.php
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use DateTime;
@@ -36,9 +37,23 @@ class ApiController extends Controller
             $usersArray[] = isset($users[$label]) ? count($users[$label]) : 0;
         }
 
+        $courses = Course::whereDate('created_at', '>=', $startDate->format('Y-m-d'))
+            ->whereDate('created_at', '<=', $endDate->format('Y-m-d'))
+            ->get()
+            ->groupBy(function ($user) {
+                return $user->created_at->format('Y-m-d');
+            });
+
+        $coursesArray = [];
+
+        foreach ($labels as $label) {
+            $coursesArray[] = isset($courses[$label]) ? count($courses[$label]) : 0;
+        }
+
         return response()->json([
             'labels' => $labels,
             'users' => $usersArray,
+            'courses' => $coursesArray,
         ]);
     }
 }
