@@ -5,6 +5,8 @@ use Illuminate\{
     Http\Request
 };
 
+use App\Http\Controllers\ApiController;
+
 use App\Http\Controllers\Api\{
     AuthenticationAPIController,
     CategoryAPIController,
@@ -38,3 +40,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
     Route::apiResource('/releases', ReleaseAPIController::class);
     Route::apiResource('/newsletters', NewsletterAPIController::class);
 });
+// routes/api.php
+
+Route::get('chart-data', [ApiController::class, 'getChartData']);
