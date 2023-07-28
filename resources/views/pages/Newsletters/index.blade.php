@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="table-responsive"  style="padding: 20px">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>ID</th>
