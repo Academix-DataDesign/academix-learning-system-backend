@@ -4,12 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
-use App\Models\Currency;
-use App\Models\Newsletter;
-use App\Models\Release;
-use App\Models\Report;
-use App\Models\Type;
-use App\Models\Language;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -20,6 +14,16 @@ class DashboardController extends Controller
     public function index()
     {
         return view('admin.index');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $results = Course::search($query)->paginate(5);
+        $results->load('instructor');
+
+        return view('pages.SearchedPage.index', compact('results'));
     }
 
     /**

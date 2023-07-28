@@ -10,6 +10,7 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ReleaseController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TypeController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -17,18 +18,20 @@ Route::get('/', function () {
     return to_route('login');
 });
 
+Route::get('/search', [DashboardController::class, 'search'])->name('user.search');
+
 Route::get('/activate/{token}', [AuthenticationAPIController::class, 'activateAccount'])->name('activate');
 
 Route::group(['prefix' => 'admin/dashboard', 'as' => 'web.'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin-dashboard');
 
     Route::resource('courses', CourseController::class);
-    Route::resource('type', TypeController::class);
-    Route::resource('language', LanguageController::class);
-    Route::resource('currency', CurrencyController::class);
-    Route::resource('report', ReportController::class);
-    Route::resource('release', ReleaseController::class);
-    Route::resource('newsletter', NewsletterController::class);
+    Route::resource('types', TypeController::class);
+    Route::resource('languages', LanguageController::class);
+    Route::resource('currencies', CurrencyController::class);
+    Route::resource('reports', ReportController::class);
+    Route::resource('releases', ReleaseController::class);
+    Route::resource('newsletters', NewsletterController::class);
 });
 
 // Auth routes

@@ -4,11 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
     protected $guarded = [];
+
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'instructor_id' => $this->instructor->name,
+        ];
+    }
 
     public function category()
     {

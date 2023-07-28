@@ -40,12 +40,6 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
     </ul>
 
     <!-- Right navbar links -->
@@ -56,9 +50,10 @@
           <i class="fas fa-search"></i>
         </a>
         <div class="navbar-search-block">
-          <form class="form-inline">
+          <form action="{{ route('user.search') }}" method="GET">
             <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <input value="dwd" name="query" type="text" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search for courses..">
+
               <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
                   <i class="fas fa-search"></i>
@@ -174,18 +169,18 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href={{ route('admin-dashboard') }} class="brand-link">
+    <a href={{ route('web.admin-dashboard') }} class="brand-link">
       <img src={{ asset('assets/logo.png') }} alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Dashboard panel</span>
     </a>
-
+k
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="d-flex justify-content-center">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="https://hips.hearstapps.com/hmg-prod/images/articles/2016/02/need-to-be-right-1487213312.jpg?crop=0.636xw:1xh;center,top&resize=1200:*" class="img-circle elevation-2" alt="User Image">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
             <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -214,8 +209,8 @@
             <a href="#" class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                  Dashboard
-                  <i class="right fas fa-angle-left"></i>
+                  Analytics
+                  <i class="right fas"></i>
               </p>
           </a>
           
@@ -259,49 +254,49 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                  <a href={{ route('course.index') }} class="nav-link {{ request()->is('admin/dashboard/course') ? 'active' : '' }}">
+                  <a href={{ route('web.courses.index') }} class="nav-link {{ request()->is('admin/dashboard/course') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Courses</p>
                   <span class="badge badge-info right">{{ $counts['courses'] }}</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href={{ route('type.index') }} class="nav-link {{ request()->is('admin/dashboard/type') ? 'active' : '' }}">
+                <a href={{ route('web.types.index') }} class="nav-link {{ request()->is('admin/dashboard/type') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Types</p>
                 <span class="badge badge-info right">{{ $counts['types'] }}</span>
               </a>
             </li>
             <li class="nav-item">
-              <a href={{ route('language.index') }} class="nav-link {{ request()->is('admin/dashboard/language') ? 'active' : '' }}">
+              <a href={{ route('web.languages.index') }} class="nav-link {{ request()->is('admin/dashboard/language') ? 'active' : '' }}">
               <i class="far fa-circle nav-icon"></i>
               <p>Languages</p>
               <span class="badge badge-info right">{{ $counts['languages'] }}</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href={{ route('currency.index') }} class="nav-link {{ request()->is('admin/dashboard/currency') ? 'active' : '' }}">
+            <a href={{ route('web.currencies.index') }} class="nav-link {{ request()->is('admin/dashboard/currency') ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
             <p>Currencies</p>
             <span class="badge badge-info right">{{ $counts['currencies'] }}</span>
           </a>
         </li>
         <li class="nav-item">
-          <a href={{ route('report.index') }} class="nav-link {{ request()->is('admin/dashboard/report') ? 'active' : '' }}">
+          <a href={{ route('web.reports.index') }} class="nav-link {{ request()->is('admin/dashboard/report') ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Reports</p>
           <span class="badge badge-info right">{{ $counts['reports'] }}</span>
         </a>
       </li>
       <li class="nav-item">
-        <a href={{ route('release.index') }} class="nav-link {{ request()->is('admin/dashboard/release') ? 'active' : '' }}">
+        <a href={{ route('web.releases.index') }} class="nav-link {{ request()->is('admin/dashboard/release') ? 'active' : '' }}">
         <i class="far fa-circle nav-icon"></i>
         <p>Releases</p>
         <span class="badge badge-info right">{{ $counts['releases'] }}</span>
       </a>
     </li>
     <li class="nav-item">
-      <a href={{ route('newsletter.index') }} class="nav-link {{ request()->is('admin/dashboard/newsletter') ? 'active' : '' }}">
+      <a href={{ route('web.newsletters.index') }} class="nav-link {{ request()->is('admin/dashboard/newsletter') ? 'active' : '' }}">
       <i class="far fa-circle nav-icon"></i>
       <p>Newsletters</p>
       <span class="badge badge-info right">{{ $counts['newsletters'] }}</span>
@@ -856,14 +851,14 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">Analytics</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">
-                <a href={{ route('admin-dashboard') }}>
-                Dashboard</a>
+                <a href={{ route('web.admin-dashboard') }}>
+                Analytics</a>
               </li>
             </ol>
           </div><!-- /.col -->
