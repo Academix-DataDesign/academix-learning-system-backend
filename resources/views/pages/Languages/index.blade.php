@@ -18,6 +18,16 @@
                     <td>{{ $language->name }}</td>
                     <td>{{ date('Y-m-d', strtotime($language->created_at)) }}</td>
                     <td>{{ date('Y-m-d', strtotime($language->updated_at)) }}</td>
+                    <td><form action="{{ route('language.edit', ['id' => $language->id]) }}" method="POST">
+                         @csrf
+                         @method('PUT')
+                        <button type="submit" class="btn btn-primary">Edit Language</button>
+                        </form></td>
+                    <td><form action="{{ route('language.destroy', ['id' => $language->id]) }}" method="POST">
+                         @csrf
+                        @method('DELETE')
+                         <button type="submit" class="btn btn-danger">Delete Language</button>
+                         </form></td>
                 </tr>
             @endforeach
         </tbody>

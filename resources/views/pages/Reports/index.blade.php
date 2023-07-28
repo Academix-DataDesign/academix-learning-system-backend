@@ -24,6 +24,16 @@
                     <td>{{ $report->description }}</td>
                     <td>{{ date('Y-m-d', strtotime($report->created_at)) }}</td>
                     <td>{{ date('Y-m-d', strtotime($report->updated_at)) }}</td>
+                    <td><form action="{{ route('report.edit', ['id' => $report->id]) }}" method="POST">
+                         @csrf
+                         @method('PUT')
+                        <button type="submit" class="btn btn-primary">Edit Report</button>
+                        </form></td>
+                    <td><form action="{{ route('report.destroy', ['id' => $report->id]) }}" method="POST">
+                         @csrf
+                        @method('DELETE')
+                         <button type="submit" class="btn btn-danger">Delete Report</button>
+                         </form></td>
                 </tr>
             @endforeach
         </tbody>

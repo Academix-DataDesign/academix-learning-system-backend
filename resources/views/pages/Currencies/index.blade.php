@@ -14,6 +14,16 @@
                 <tr>
                     <td>{{ $currency->id }}</td>
                     <td>{{ $currency->name }}</td>
+                    <td><form action="{{ route('currency.edit', ['id' => $currency->id]) }}" method="POST">
+                         @csrf
+                         @method('PUT')
+                        <button type="submit" class="btn btn-primary">Edit Currency</button>
+                        </form></td>
+                    <td><form action="{{ route('currency.destroy', ['id' => $currency->id]) }}" method="POST">
+                         @csrf
+                        @method('DELETE')
+                         <button type="submit" class="btn btn-danger">Delete Currency</button>
+                         </form></td>
                 </tr>
             @endforeach
         </tbody>

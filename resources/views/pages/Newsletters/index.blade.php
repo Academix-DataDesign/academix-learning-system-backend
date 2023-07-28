@@ -16,6 +16,16 @@
                     <td>{{ $newsletter->id }}</td>
                     <td>{{ $newsletter->student->name }}</td>
                     <td>{{ date('Y-m-d', strtotime($newsletter->updated_at)) }}</td>
+                    <td><form action="{{ route('newsletter.edit', ['id' => $newsletter->id]) }}" method="POST">
+                         @csrf
+                         @method('PUT')
+                        <button type="submit" class="btn btn-primary">Edit Newsletter</button>
+                        </form></td>
+                    <td><form action="{{ route('newsletter.destroy', ['id' => $newsletter->id]) }}" method="POST">
+                         @csrf
+                        @method('DELETE')
+                         <button type="submit" class="btn btn-danger">Delete Newsletter</button>
+                         </form></td>
                 </tr>
             @endforeach
         </tbody>

@@ -22,6 +22,16 @@
                     <td>{{ $release->link }}</td>
                     <td>{{ date('Y-m-d', strtotime($release->created_at)) }}</td>
                     <td>{{ date('Y-m-d', strtotime($release->updated_at)) }}</td>
+                    <td><form action="{{ route('release.edit', ['id' => $release->id]) }}" method="POST">
+                         @csrf
+                         @method('PUT')
+                        <button type="submit" class="btn btn-primary">Edit Release</button>
+                        </form></td>
+                    <td><form action="{{ route('release.destroy', ['id' => $release->id]) }}" method="POST">
+                         @csrf
+                        @method('DELETE')
+                         <button type="submit" class="btn btn-danger">Delete Release</button>
+                         </form></td>
                 </tr>
             @endforeach
         </tbody>

@@ -13,6 +13,8 @@
                 <th>Category</th>
                 <th>Status</th>
                 <th>Language</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +28,18 @@
                     <td>{{ $course->category->name }}</td>
                     <td>{{ $course->status->name }}</td>
                     <td>{{ $course->language->name }}</td>
+                    <td><form action="{{ route('courses.edit', ['id' => $course->id]) }}" method="POST">
+                         @csrf
+                         @method('PUT')
+                        <button type="submit" class="btn btn-primary">Edit Course</button>
+                        </form></td>
+                    <td><form action="{{ route('courses.destroy', ['id' => $course->id]) }}" method="POST">
+                         @csrf
+                        @method('DELETE')
+                         <button type="submit" class="btn btn-danger">Delete Course</button>
+                         </form></td>
                 </tr>
+
             @endforeach
         </tbody>
     </table>
@@ -52,5 +65,7 @@
         });
     });
 </script>
+
+
 
 @stop

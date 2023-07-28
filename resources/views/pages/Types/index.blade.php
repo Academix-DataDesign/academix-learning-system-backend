@@ -14,6 +14,16 @@
                 <tr>
                     <td>{{ $type->id }}</td>
                     <td>{{ $type->name }}</td>
+                    <td><form action="{{ route('type.edit', ['id' => $type->id]) }}" method="POST">
+                         @csrf
+                         @method('PUT')
+                        <button type="submit" class="btn btn-primary">Edit Type</button>
+                        </form></td>
+                    <td><form action="{{ route('type.destroy', ['id' => $type->id]) }}" method="POST">
+                         @csrf
+                        @method('DELETE')
+                         <button type="submit" class="btn btn-danger">Delete Type</button>
+                         </form></td>
                 </tr>
             @endforeach
         </tbody>
