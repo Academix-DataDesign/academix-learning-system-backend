@@ -1,12 +1,7 @@
 @extends('layouts.admin')
-
-@section('title')
-<h1>Courses</h1>
-@stop
-
 @section('content')
 
-<div class="table-responsive"  style="padding: 20px">
+<div class="table-responsive" style="padding: 20px">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -26,7 +21,7 @@
                     <td>{{ $course->id }}</td>
                     <td>{{ $course->title }}</td>
                     <td>{{ $course->instructor->name }}</td>
-                    <td>{{ $course->description }}</td>
+                    <td class="course-description">{{ $course->description }}</td>
                     <td>{{ $course->level->name }}</td>
                     <td>{{ $course->category->name }}</td>
                     <td>{{ $course->status->name }}</td>
@@ -35,8 +30,27 @@
             @endforeach
         </tbody>
     </table>
-        {{ $courses->links('pagination::bootstrap-5') }}
+    {{ $courses->links('pagination::bootstrap-5') }}
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let descriptions = document.querySelectorAll('.course-description');
+
+        descriptions.forEach((description) => {
+            let text = description.textContent;
+            let wordsPerLine = 10;
+            let wordArray = text.split(' ');
+            let lines = [];
+
+            for (let i = 0; i < wordArray.length; i += wordsPerLine) {
+                let line = wordArray.slice(i, i + wordsPerLine).join(' ');
+                lines.push(line);
+            }
+
+            description.innerHTML = lines.join('<br>');
+        });
+    });
+</script>
 
 @stop
