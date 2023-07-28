@@ -17,7 +17,7 @@ class ApiController extends Controller
         $startDate = (clone $endDate)->sub(new DateInterval('P6D'));
 
         $labels = [];
-        $currentDate = (clone $startDate); // Start from the adjusted start date
+        $currentDate = (clone $startDate);
 
         while ($currentDate <= $endDate) {
             $labels[] = $currentDate->format('Y-m-d');
