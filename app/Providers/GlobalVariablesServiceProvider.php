@@ -9,6 +9,7 @@ use App\Models\Release;
 use App\Models\Report;
 use App\Models\Type;
 use App\Models\Language;
+use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -46,6 +47,7 @@ class GlobalVariablesServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $counts = Cache::remember('counts', now()->addMinutes(10), function () {
                 return [
+                    'usersC' => User::query()->count(),
                     'courses' => Course::query()->count(),
                     'types' => Type::query()->count(),
                     'languages' => Language::query()->count(),
