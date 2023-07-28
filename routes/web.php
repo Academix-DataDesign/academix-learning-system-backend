@@ -19,10 +19,10 @@ Route::get('/', function () {
 
 Route::get('/activate/{token}', [AuthenticationAPIController::class, 'activateAccount'])->name('activate');
 
-Route::prefix('admin/dashboard')->middleware('auth')->group(function () {
+Route::group(['prefix' => 'admin/dashboard', 'as' => 'web.'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin-dashboard');
 
-    Route::resource('course', CourseController::class);
+    Route::resource('courses', CourseController::class);
     Route::resource('type', TypeController::class);
     Route::resource('language', LanguageController::class);
     Route::resource('currency', CurrencyController::class);

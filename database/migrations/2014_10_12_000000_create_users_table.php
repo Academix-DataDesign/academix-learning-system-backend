@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('town', 255)->nullable();
             $table->string('country', 255)->nullable();
             $table->string('short_bio', 255)->default('Lorem ipsum');
+            $table->rememberToken();
             // Indexes
             $table->index('email');
             // Timestamps

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\GlobalVariable;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -12,7 +13,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::with('category', 'instructor', 'level', 'status', 'language')->paginate(5);
+        $paginationValue = GlobalVariable::where('name', 'pagination')->value('value');
+        $courses = Course::with('category', 'instructor', 'level', 'status', 'language')->paginate($paginationValue);
 
         return view('pages.Courses.index', compact('courses'));
     }
