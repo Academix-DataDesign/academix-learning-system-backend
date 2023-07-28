@@ -182,12 +182,14 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="https://hips.hearstapps.com/hmg-prod/images/articles/2016/02/need-to-be-right-1487213312.jpg?crop=0.636xw:1xh;center,top&resize=1200:*" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+      <div class="d-flex justify-content-center">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/articles/2016/02/need-to-be-right-1487213312.jpg?crop=0.636xw:1xh;center,top&resize=1200:*" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          </div>
         </div>
       </div>
 

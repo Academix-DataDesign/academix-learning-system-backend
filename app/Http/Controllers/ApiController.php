@@ -5,15 +5,26 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use DateTime;
+use DateInterval;
 
 class ApiController extends Controller
 {
     public function getChartData(): JsonResponse
     {
-        $labels = ['2023-07-20', '2023-07-21', '2023-07-22', '2023-07-23', '2023-07-24', '2023-07-25', '2023-07-26', '2023-07-27', '2023-07-28'];
+        $endDate = new DateTime('now');
+        $startDate = (clone $endDate)->sub(new DateInterval('P6D'));
 
-        $users = User::whereDate('created_at', '>=', '2023-07-20')
-            ->whereDate('created_at', '<=', '2023-07-28')
+        $labels = [];
+        $currentDate = (clone $startDate); // Start from the adjusted start date
+
+        while ($currentDate <= $endDate) {
+            $labels[] = $currentDate->format('Y-m-d');
+            $currentDate->add(new DateInterval('P1D'));
+        }
+
+        $users = User::whereDate('created_at', '>=', $startDate->format('Y-m-d'))
+            ->whereDate('created_at', '<=', $endDate->format('Y-m-d'))
             ->get()
             ->groupBy(function ($user) {
                 return $user->created_at->format('Y-m-d');

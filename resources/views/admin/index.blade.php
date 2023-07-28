@@ -4,7 +4,7 @@
 
 <body>
     <button id="fetchDataButton" type="button" class="btn btn-primary m-3">Load</button>
-    <canvas id="myChart" height="100px"></canvas>
+    <canvas id="myChart" height="100px" class="m-3"></canvas>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -27,7 +27,7 @@
                 const chartData = {
                     labels: labels,
                     datasets: [{
-                        label: 'Number of courses',
+                        label: 'Number of users',
                         backgroundColor: '#dc3545',
                         borderColor: '#dc3545',
                         data: users,
@@ -44,7 +44,6 @@
                     myChart.data = chartData;
                     myChart.update();
                 } else {
-                    // Create the chart for the first time
                     const canvas = document.getElementById('myChart');
                     myChart = new Chart(canvas, config);
                 }
