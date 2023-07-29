@@ -3,7 +3,7 @@ let myChart;
 function fetchDataAndRenderChart() {
     console.log('fetchDataAndRenderChart function is called.');
 
-    fetch('http://127.0.0.1:8000/api/chart-data')
+    fetch('https://api.academix.me/api/chart-data')
         .then(response => response.json())
         .then(data => {
             console.log('Data received:', data);
