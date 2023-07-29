@@ -16,9 +16,11 @@
         "laravel/passport": "^11.8",
         "laravel/sanctum": "^3.2",
         "laravel/scout": "^10.2",
+        "laravel/slack-notification-channel": "^3.0",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
-        "predis/predis": "^2.2"
+        "predis/predis": "^2.2",
+        "spatie/laravel-backup": "^8.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
