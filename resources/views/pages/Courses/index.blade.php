@@ -13,7 +13,6 @@
 @stop
 
 @section('content')
-
     <div class="table-responsive" style="padding: 20px">
 
         @if (session()->has('success-updated'))
@@ -62,7 +61,8 @@
                                 <a href="{{ route('web.courses.edit', $course->title) }}" class="btn btn-primary">Edit</a>
                             </td>
                             <td>
-                                <form action="{{ route('web.courses.destroy', $course->id) }}" method="POST">
+                                <form class="delete-course-form" data-course-id="{{ $course->id }}"
+                                    action="{{ route('web.courses.destroy', $course->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -76,28 +76,8 @@
         @endif
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let descriptions = document.querySelectorAll('.course-description');
-
-            descriptions.forEach((description) => {
-                let text = description.textContent;
-                let wordsPerLine = 10;
-                let wordArray = text.split(' ');
-                let lines = [];
-
-                for (let i = 0; i < wordArray.length; i += wordsPerLine) {
-                    let line = wordArray.slice(i, i + wordsPerLine).join(' ');
-                    lines.push(line);
-                }
-
-                description.innerHTML = lines.join('<br>');
-            });
-        });
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script src={{ asset('dist/js/jQuery.js') }}></script>
-
+    <script src={{ asset('dist/js/script.js') }}></script>
 @stop
