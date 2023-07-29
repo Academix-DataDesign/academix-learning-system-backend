@@ -1,71 +1,95 @@
 @extends('layouts.admin')
+
+@section('title')
+    <h1>{{ __('Courses') }}</h1>
+@stop
+
 @section('content')
 
-<div class="table-responsive" style="padding: 20px">
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Instructor</th>
-                <th>Description</th>
-                <th>Level</th>
-                <th>Category</th>
-                <th>Status</th>
-                <th>Language</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($courses as $course)
-                <tr>
-                    <td>{{ $course->id }}</td>
-                    <td>{{ $course->title }}</td>
-                    <td>{{ $course->instructor->name }}</td>
-                    <td class="course-description">{{ $course->description }}</td>
-                    <td>{{ $course->level->name }}</td>
-                    <td>{{ $course->category->name }}</td>
-                    <td>{{ $course->status->name }}</td>
-                    <td>{{ $course->language->name }}</td>
-                    <td><form action="{{ route('courses.edit', ['id' => $course->id]) }}" method="POST">
-                         @csrf
-                         @method('PUT')
-                        <button type="submit" class="btn btn-primary">Edit Course</button>
-                        </form></td>
-                    <td><form action="{{ route('courses.destroy', ['id' => $course->id]) }}" method="POST">
-                         @csrf
-                        @method('DELETE')
-                         <button type="submit" class="btn btn-danger">Delete Course</button>
-                         </form></td>
-                </tr>
+    <div class="table-responsive" style="padding: 20px">
 
-            @endforeach
-        </tbody>
-    </table>
-    {{ $courses->links('pagination::bootstrap-5') }}
-</div>
+        @if (session()->has('success-updated'))
+            <div class="alert alert-success alert-dismissible fade show mt-3 fade-out-alert" role="alert">
+                {{ session('success-updated') }}
+            </div>
+        @endif
+        @if (session()->has('success-deleted'))
+            <div class="alert alert-success alert-dismissible fade show mt-3 fade-out-alert" role="alert">
+                {{ session('success-deleted') }}
+            </div>
+        @endif
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let descriptions = document.querySelectorAll('.course-description');
+        @if ($courses->isEmpty())
+            <div class="alert alert-info mt-3">
+                No courses found.
+            </div>
+        @else
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Instructor</th>
+                        <th>Description</th>
+                        <th>Level</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Language</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($courses as $course)
+                        <tr>
+                            <td>{{ $course->id }}</td>
+                            <td>{{ $course->title }}</td>
+                            <td>{{ $course->instructor->name }}</td>
+                            <td class="course-description">{{ $course->description }}</td>
+                            <td>{{ $course->level->name }}</td>
+                            <td>{{ $course->category->name }}</td>
+                            <td>{{ $course->status->name }}</td>
+                            <td>{{ $course->language->name }}</td>
+                            <td>
+                                <a href="{{ route('web.courses.edit', $course->title) }}" class="btn btn-primary">Edit</a>
+                            </td>
+                            <td>
+                                <form action="{{ route('web.courses.destroy', $course->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{ $courses->links('pagination::bootstrap-5') }}
+        @endif
+    </div>
 
-        descriptions.forEach((description) => {
-            let text = description.textContent;
-            let wordsPerLine = 10;
-            let wordArray = text.split(' ');
-            let lines = [];
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let descriptions = document.querySelectorAll('.course-description');
 
-            for (let i = 0; i < wordArray.length; i += wordsPerLine) {
-                let line = wordArray.slice(i, i + wordsPerLine).join(' ');
-                lines.push(line);
-            }
+            descriptions.forEach((description) => {
+                let text = description.textContent;
+                let wordsPerLine = 10;
+                let wordArray = text.split(' ');
+                let lines = [];
 
-            description.innerHTML = lines.join('<br>');
+                for (let i = 0; i < wordArray.length; i += wordsPerLine) {
+                    let line = wordArray.slice(i, i + wordsPerLine).join(' ');
+                    lines.push(line);
+                }
+
+                description.innerHTML = lines.join('<br>');
+            });
         });
-    });
-</script>
+    </script>
 
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src={{ asset('dist/js/jQuery.js') }}></script>
 
 @stop

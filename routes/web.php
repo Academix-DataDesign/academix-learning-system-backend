@@ -36,6 +36,6 @@ Route::group(['prefix' => 'admin/dashboard', 'as' => 'web.'], function () {
 
 // Auth routes
 Auth::routes();
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

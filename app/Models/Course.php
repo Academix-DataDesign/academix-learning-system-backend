@@ -19,6 +19,11 @@ class Course extends Model
         ];
     }
 
+    public function getRouteKeyName()
+    {
+        return 'title';
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

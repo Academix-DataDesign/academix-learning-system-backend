@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateCourseRequest;
+use App\Models\Category;
 use App\Models\Course;
-use App\Models\GlobalVariable;
+use App\Models\Status;
+use App\Models\Language;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -35,34 +38,37 @@ class CourseController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Course $course)
     {
-        //
+        $course->load('category', 'status', 'language');
+
+        $categories = Category::select('name', 'id')->get();
+        $statuses = Status::select('name', 'id')->get();
+        $languages = Language::select('name', 'id')->get();
+
+        return view('pages.Courses.edit', compact('course', 'categories', 'statuses', 'languages'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        $course->update($request->validated());
+
+        return redirect()->route('web.courses.index')->with('success-updated', 'Course updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        return redirect()->route('web.courses.index')->with('success-deleted', 'Course deleted successfully.');
     }
 }
