@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_NAME', 'laravel-backup'),
+        'name' => env('APP_NAME', 'Academix'),
 
         'source' => [
 
@@ -165,7 +165,7 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'perisicnikola37@gmail.com',
+            'to' => env('MAIL_SEND_TO', 'perisicnikola37@gmail.com'),
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'academix@academix.com'),
@@ -246,7 +246,7 @@ return [
             /*
              * The number of days for which backups must be kept.
              */
-            'keep_all_backups_for_days' => 7,
+            'keep_all_backups_for_days' => 0,
 
             /*
              * The number of days for which daily backups must be kept.
