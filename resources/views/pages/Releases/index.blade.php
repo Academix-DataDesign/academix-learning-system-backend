@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
+    Academix | Releases
+@stop
+
+@section('param')
+    Releases
+@stop
+
+@section('header')
     <h1>{{ __('Releases') }}</h1>
 @stop
 

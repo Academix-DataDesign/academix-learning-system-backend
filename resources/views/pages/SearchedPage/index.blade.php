@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
+    Academix | Searching
+@stop
+
+@section('param')
+    Searching
+@stop
+
+@section('header')
     <h1>{{ __('Searching..') }}</h1>
 @stop
 

@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
+    Academix | Currencies
+@stop
+
+@section('param')
+    Currencies
+@stop
+
+@section('header')
     <h1>{{ __('Currencies') }}</h1>
 @stop
 

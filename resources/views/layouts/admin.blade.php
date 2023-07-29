@@ -4,8 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Academix | Online courses</title>
-    <meta rel="icon" href={{ asset('assets/logo.png') }} />
+    <title>
+        @hasSection('title')
+            @yield('title')
+        @else
+            Academix | Online courses
+        @endif
+    </title>
+    <link rel="icon" href={{ asset('assets/logo.png') }} />
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -221,7 +227,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item menu-open">
-                            <a href="#"
+                            <a href={{ route('web.admin-dashboard') }}
                                 class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -264,7 +270,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
-                                    Courses settings
+                                    Global settings
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -322,6 +328,43 @@
                                         class="nav-link {{ request()->is('admin/dashboard/newsletters') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Newsletters</p>
+                                        <span class="badge badge-info right">{{ $counts['newsletters'] }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Admin settings
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href={{ route('web.newsletters.index') }}
+                                        class="nav-link {{ request()->is('admin/dashboard/newsletters') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Users</p>
+                                        <span class="badge badge-info right">{{ $counts['newsletters'] }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href={{ route('web.newsletters.index') }}
+                                        class="nav-link {{ request()->is('admin/dashboard/newsletters') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Global variables</p>
+                                        <span class="badge badge-info right">{{ $counts['newsletters'] }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href={{ route('web.newsletters.index') }}
+                                        class="nav-link {{ request()->is('admin/dashboard/newsletters') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Permissions</p>
                                         <span class="badge badge-info right">{{ $counts['newsletters'] }}</span>
                                     </a>
                                 </li>
@@ -851,7 +894,6 @@
                                 </button>
                             </form>
                         </li>
-
                         {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-circle text-warning"></i>
@@ -878,14 +920,15 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">@yield('title')</h1>
+                            <h1 class="m-0">@yield('header')</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item active">
-                                    <a href={{ route('web.admin-dashboard') }}>
-                                        Analytics</a>
+                                    <a href="{{ route('web.admin-dashboard') }}" onclick="reloadPage()">
+                                        @yield('param')
+                                    </a>
                                 </li>
                             </ol>
                         </div><!-- /.col -->
@@ -944,6 +987,13 @@
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
+
+    <script>
+        function reloadPage() {
+            event.preventDefault();
+            location.reload();
+        }
+    </script>
 </body>
 
 </html>

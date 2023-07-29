@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
+    Academix | Reports
+@stop
+
+@section('param')
+    Reports
+@stop
+
+@section('header')
     <h1>{{ __('Reports') }}</h1>
 @stop
 

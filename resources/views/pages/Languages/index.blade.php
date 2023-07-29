@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
+    Academix | Languages
+@stop
+
+@section('param')
+    Languages
+@stop
+
+@section('header')
     <h1>{{ __('Languages') }}</h1>
 @stop
 
