@@ -18,6 +18,10 @@ Academix is built as a learning management system (LMS) that provides a user-fri
 - Progress tracking and assessment
 - Flexible learning schedule
 - Expert instructors
+- Dynamic learning community
+- Real-world projects
+- Performance analytics
+- Certifications and achievements
 
 ## Getting Started
 
@@ -28,6 +32,9 @@ To get started with Academix, follow these steps:
 3. Explore the available courses and choose the ones that interest you
 4. Start learning and enhancing your skills!
 
+## Security
+For security-related issues, please refer to our [SECURITY.md](./SECURITY.md) file.
+
 ## Contributing
 We welcome contributions from the open source community to enhance Academix. If you find any issues or have suggestions for improvements, please submit a pull request.
 
@@ -36,9 +43,6 @@ For any inquiries or support, you can reach us at perisicnikola37@gmail.com.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-## Security
-For security-related issues, please refer to our [SECURITY.md](./SECURITY.md) file.
 
 ## Issue Templates
 - [Bug Report](./.github/ISSUE_TEMPLATE/bug_report.md)
