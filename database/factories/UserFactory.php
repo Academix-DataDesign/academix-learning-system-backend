@@ -24,6 +24,7 @@ class UserFactory extends Factory
             'town' => null,
             'country' => null,
             'short_bio' => 'Lorem ipsum',
+            'created_at' => $this->faker->dateTimeBetween('-6 days', 'now'),
         ];
     }
 }

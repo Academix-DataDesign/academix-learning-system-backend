@@ -199,7 +199,7 @@
                 <div class="d-flex justify-content-center">
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                            <img src="https://avatars.githubusercontent.com/u/79047182?v=4"
                                 class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">

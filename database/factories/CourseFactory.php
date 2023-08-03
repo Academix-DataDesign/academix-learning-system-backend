@@ -25,6 +25,7 @@ class CourseFactory extends Factory
             'price' => $this->faker->randomFloat(2, 0, 100),
             'certification' => false,
             'bestseller' => false,
+            'created_at' => $this->faker->dateTimeBetween('-6 days', 'now'),
         ];
     }
 }
