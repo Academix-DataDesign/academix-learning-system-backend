@@ -15,16 +15,7 @@
 @section('content')
     <div class="table-responsive" style="padding: 20px">
 
-        @if (session()->has('success-updated'))
-            <div class="alert alert-success alert-dismissible fade show mt-3 fade-out-alert" role="alert">
-                {{ session('success-updated') }}
-            </div>
-        @endif
-        @if (session()->has('success-deleted'))
-            <div class="alert alert-success alert-dismissible fade show mt-3 fade-out-alert" role="alert">
-                {{ session('success-deleted') }}
-            </div>
-        @endif
+        <x-alert-message sessionName="success-updated" type="success" />
 
         @if ($courses->isEmpty())
             <div class="alert alert-info mt-3">
