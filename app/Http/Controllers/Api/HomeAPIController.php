@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\HomeResource;
+use App\Http\Resources\CategoryAppResource;
 use App\Models\User;
 use App\Models\Lesson;
 use App\Models\Category;
+use App\Models\Course;
 use App\Models\Comment;
 
 class HomeAPIController extends Controller
@@ -38,6 +40,21 @@ class HomeAPIController extends Controller
         ];
 
         return new HomeResource(((object) $homeArray));
+    }
+
+    function category($id) {
+        $courses = Course::where('category_id', $id)->get();
+        $minPrice = Course::min('price');
+        $maxPrice = Course::max('price');
+        $categories = Category::all();
+
+        $categoryArray = [
+            'courses' => $courses,
+            'minPrice' => $minPrice,
+            'maxPrice' => $maxPrice,
+        ];
+
+        return new CategoryAppResource(((object) $categoryArray));
     }
 
     /**

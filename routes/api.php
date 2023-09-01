@@ -32,6 +32,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
 
     Route::apiResource('/users', UserAPIController::class);
     Route::get('/app/home', [HomeAPIController::class, 'home']);
+    Route::get('/app/category/{id}', [HomeAPIController::class, 'category']);
     Route::apiResource('/courses', CourseAPIController::class);
     Route::apiResource('/categories', CategoryAPIController::class);
     Route::get('/categories-search', [CategoryAPIController::class, 'search']);
