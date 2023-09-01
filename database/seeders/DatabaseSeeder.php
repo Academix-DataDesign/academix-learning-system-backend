@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
         // CourseRequirement::factory()->count(5)->create();
         // InstructorCourse::factory()->count(5)->create();
         // Topic::factory()->count(5)->create();
-        // Comment::factory()->count(5)->create();
+        Comment::factory()->count(5)->create();
         // Category::factory()->count(5)->create();
         // CourseLevel::factory()->count(5)->create();
         // Currency::factory()->count(5)->create();

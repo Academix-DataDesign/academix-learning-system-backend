@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\{
     ReportAPIController,
     TypeAPIController,
     UserAPIController,
+    HomeAPIController
 };
 
 Route::middleware('auth:api')->match(['get', 'post'], '/user', function (Request $request) {
@@ -30,6 +31,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
     Route::post('/logout', [AuthenticationAPIController::class, 'logoutUser'])->name('logout2');
 
     Route::apiResource('/users', UserAPIController::class);
+    Route::get('/app/home', [HomeAPIController::class, 'home']);
     Route::apiResource('/courses', CourseAPIController::class);
     Route::apiResource('/categories', CategoryAPIController::class);
     Route::get('/categories-search', [CategoryAPIController::class, 'search']);

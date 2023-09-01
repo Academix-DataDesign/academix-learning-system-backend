@@ -13,7 +13,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'type_id' => 3,
+            'type_id' => $this->faker->numberBetween(1, 3),
             'name' => $this->faker->name,
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
