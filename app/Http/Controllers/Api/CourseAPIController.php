@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Auth;
 
 class CourseAPIController extends Controller
 {
@@ -55,7 +57,13 @@ class CourseAPIController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $courses = Course::find($id);
+        $usr = Auth::user();
+        $user = User::find($usr->id);
+
+        $courses->isPurchased = !empty($user->enrollments) ? $user->enrollments->contains($id) : false; 
+
+        return new CourseResource($courses);
     }
 
     /**

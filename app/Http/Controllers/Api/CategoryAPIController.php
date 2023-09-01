@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryAPIController extends Controller
 {

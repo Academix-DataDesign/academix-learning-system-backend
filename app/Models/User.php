@@ -22,4 +22,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Type::class);
     }
+
+    public function enrollments()
+    {
+        return $this->belongsToMany(Course::class, 'enrollments', 'student_id', 'id');
+    }
+    
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'instructor_id');
+    }
 }

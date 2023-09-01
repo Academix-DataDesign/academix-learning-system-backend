@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class CourseResource extends JsonResource
 {
@@ -29,6 +31,8 @@ class CourseResource extends JsonResource
             'price' => $this->price,
             'certification' => $this->certification && true,
             'bestseller' => $this->bestseller && true,
+            'isPurchased' => $this->isPurchased ?? false,
+            'sameInstructor' => $this->instructor->courses()->where('courses.id', '!=', $this->id)->get(),
         ];
     }
 }
